@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" style="-fx-background-color: #F9F5D2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TableController">
+   <children>
+      <TableView fx:id="table" layoutX="49.0" layoutY="90.0" prefHeight="584.0" prefWidth="924.0">
+        <columns>
+          <TableColumn fx:id="id" prefWidth="28.141464233398438" text="id" />
+          <TableColumn fx:id="creator" prefWidth="80.49756622314453" text="creator" />
+            <TableColumn fx:id="name" prefWidth="75.42436218261719" text="name" />
+            <TableColumn fx:id="creationDate" prefWidth="204.07562255859375" text="creationDate" />
+            <TableColumn fx:id="age" prefWidth="56.20733642578125" text="age" />
+            <TableColumn prefWidth="61.784942626953125" text="coordinates">
+               <columns>
+                  <TableColumn prefWidth="55.977294921875" text="x" fx:id="x" />
+                  <TableColumn fx:id="y" prefWidth="56.6468505859375" text="y" />
+               </columns>
+            </TableColumn>
+            <TableColumn fx:id="color" prefWidth="75.36712646484375" text="color" />
+            <TableColumn fx:id="type" prefWidth="103.16949462890625" text="type" />
+            <TableColumn fx:id="character" prefWidth="101.52264404296875" text="character" />
+            <TableColumn fx:id="eyesCount" prefWidth="81.37274169921875" text="eyesCount" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

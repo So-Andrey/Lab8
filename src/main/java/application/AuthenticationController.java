@@ -1,7 +1,6 @@
 package application;
 
 import allForDragons.DragonsCollection;
-import commands.Invoker;
 import database.UserAuthentication;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,7 +41,14 @@ public class AuthenticationController {
             if (UserAuthentication.userLoggingIn(loginField.getText(), passwordField.getText())) {
                 logInButton.getScene().getWindow().hide();
                 DragonsCollection.putDragonsFromDB();
-                Invoker.invoker();
+                try {
+                    Stage stage = new Stage();
+                    stage.setTitle("Dragons collection manager");
+                    stage.setScene(new Scene(new FXMLLoader(getClass().getResource("/fxml/table.fxml")).load(), 1024, 720));
+                    stage.show();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             } else {
                 loginField.setText("");
                 passwordField.setText("");

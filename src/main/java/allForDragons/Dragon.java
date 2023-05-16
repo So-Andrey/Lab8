@@ -64,6 +64,12 @@ public class Dragon implements Comparable<Dragon>{
     public Coordinates getCoordinates() {
         return coordinates;
     }
+    public long getX() {
+        return coordinates.getX();
+    }
+    public float getY() {
+        return coordinates.getY();
+    }
     public Long getAge() {
         return age;
     }
@@ -79,8 +85,14 @@ public class Dragon implements Comparable<Dragon>{
     public long getCreationTime() {
         return creationDate.getTime();
     }
+    public Date getCreationDate() {
+        return creationDate;
+    }
     public DragonHead getHead() {
         return head;
+    }
+    public double getEyesCount() {
+        return head.getEyesCount();
     }
     public String getCreator() {
         return creator;

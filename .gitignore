@@ -1,0 +1,8 @@
+/.gradle/
+/.idea/
+/build/
+/gradle/
+/src/main/resources/db.cfg
+/gradlew
+/gradlew.bat
+/settings.gradle

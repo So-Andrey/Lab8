@@ -14,10 +14,10 @@ public class DragonsCollection {
         return dragons;
     }
     /** Метод, выводящий информацию о коллекции */
-    public static void getInfo() {
-        System.out.println("Тип коллекции: " + dragons.getClass().getTypeName().split(".util.")[1] + "\n" +
+    public static String getInfo() {
+        return  "Тип коллекции: " + dragons.getClass().getTypeName().split(".util.")[1] + "\n" +
                 "Дата инициализации: " + dateOfInitialization + "\n" +
-                "Количество элементов: " + dragons.size() + "\n");
+                "Количество элементов: " + dragons.size() + "\n";
     }
     /** Метод для добавления драконов из базы данных */
     public static void putDragonsFromDB() {

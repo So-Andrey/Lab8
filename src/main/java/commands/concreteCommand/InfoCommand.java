@@ -11,7 +11,7 @@ public class InfoCommand implements Command {
     @Override
     public void execute() {
         CommandArgsChecker.commandArgsChecker(0);
-        DragonsCollection.getInfo();
+        System.out.println(DragonsCollection.getInfo());
     }
     @Override
     public String description() {

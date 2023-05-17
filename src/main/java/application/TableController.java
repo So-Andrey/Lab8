@@ -266,15 +266,13 @@ public class TableController {
         gridPane.setHgap(10);
         gridPane.setVgap(10);
 
-        Label label1 = new Label("Path (you can use the tilde):");
         TextField textField1 = new TextField();
-        gridPane.add(label1, 0, 0);
+        textField1.setPromptText("Path");
         gridPane.add(textField1, 1, 0);
-
         Button submit = new Button("SUBMIT");
-        gridPane.add(submit, 0, 8);
+        gridPane.add(submit, 1, 1);
 
-        Scene scene = new Scene(gridPane, 300, 350);
+        Scene scene = new Scene(gridPane, 200, 100);
         primaryStage.setScene(scene);
         primaryStage.show();
 

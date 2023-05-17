@@ -18,6 +18,9 @@ public class RegistrationController {
     private Button registerButton;
 
     @FXML
+    private Button toLogInButton;
+
+    @FXML
     void initialize(){
         registerButton.setOnAction(event -> {
             if (UserAuthentication.userRegistration(loginField.getText(), passwordField.getText())) {
@@ -28,5 +31,6 @@ public class RegistrationController {
                 loginField.setPromptText("Login already exists");
             }
         });
+        toLogInButton.setOnAction(event -> toLogInButton.getScene().getWindow().hide());
     }
 }

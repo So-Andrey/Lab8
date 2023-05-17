@@ -32,6 +32,8 @@ public class AuthenticationController {
                 Stage stage = new Stage();
                 stage.setTitle("Dragons collection manager");
                 stage.setScene(new Scene(new FXMLLoader(getClass().getResource("/fxml/registration.fxml")).load(), 1024, 720));
+                stage.setResizable(false);
+                stage.setMaximized(false);
                 stage.show();
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -45,6 +47,8 @@ public class AuthenticationController {
                     Stage stage = new Stage();
                     stage.setTitle("Dragons collection manager");
                     stage.setScene(new Scene(new FXMLLoader(getClass().getResource("/fxml/table.fxml")).load(), 1024, 720));
+                    stage.setResizable(false);
+                    stage.setMaximized(false);
                     stage.show();
                 } catch (IOException e) {
                     throw new RuntimeException(e);

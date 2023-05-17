@@ -8,6 +8,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.ArrayList;
+import javafx.scene.control.Button;
 
 public class TableController {
 
@@ -48,6 +49,30 @@ public class TableController {
     private TableColumn<Dragon, Float> y;
 
     @FXML
+    private Button addButton;
+
+    @FXML
+    private Button countByHeadButton;
+
+    @FXML
+    private Button executeScriptButton;
+
+    @FXML
+    private Button maxByHeadButton;
+
+    @FXML
+    private Button removeButton;
+
+    @FXML
+    private Button helpButton;
+
+    @FXML
+    private Button infoButton;
+
+    @FXML
+    private Button mapButton;
+
+    @FXML
     void initialize() {
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         creator.setCellValueFactory(new PropertyValueFactory<>("creator"));
@@ -61,5 +86,6 @@ public class TableController {
         character.setCellValueFactory(new PropertyValueFactory<>("character"));
         eyesCount.setCellValueFactory(new PropertyValueFactory<>("eyesCount"));
         table.setItems(FXCollections.observableList(new ArrayList<>(DragonsCollection.getDragons())));
+
     }
 }

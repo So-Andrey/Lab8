@@ -2,6 +2,8 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,7 +13,7 @@
    <children>
       <AnchorPane layoutX="45.0" layoutY="103.0">
          <children>
-            <TableView fx:id="table" prefHeight="571.0" prefWidth="928.0">
+            <TableView fx:id="table" layoutX="3.0" layoutY="3.0" prefHeight="571.0" prefWidth="928.0">
               <columns>
                 <TableColumn fx:id="id" editable="false" prefWidth="28.141464233398438" resizable="false" text="ID" />
                 <TableColumn fx:id="creator" editable="false" prefWidth="80.49756622314453" resizable="false" text="Creator" />
@@ -60,7 +62,7 @@
             </Button>
          </children>
       </AnchorPane>
-      <Button fx:id="addButton" layoutX="224.0" layoutY="67.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="54.0" style="-fx-background-color: #F3CBC5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="Add">
+      <Button fx:id="maxByHeadButton" layoutX="399.0" layoutY="67.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: #F3CBC5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="MAX BY HEAD">
          <font>
             <Font name="Game of Thrones" size="12.0" />
          </font>
@@ -68,7 +70,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="removeButton" layoutX="287.0" layoutY="66.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="87.0" style="-fx-background-color: #F3CBC5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="REMOVE">
+      <Button fx:id="countByHeadButton" layoutX="530.0" layoutY="67.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="144.0" style="-fx-background-color: #F3CBC5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="COUNT BY HEAD">
          <font>
             <Font name="Game of Thrones" size="12.0" />
          </font>
@@ -76,7 +78,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="maxByHeadButton" layoutX="384.0" layoutY="67.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: #F3CBC5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="MAX BY HEAD">
+      <Button fx:id="executeScriptButton" layoutX="685.0" layoutY="67.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="134.0" style="-fx-background-color: #F3CBC5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="execute script">
          <font>
             <Font name="Game of Thrones" size="12.0" />
          </font>
@@ -84,21 +86,79 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="countByHeadButton" layoutX="513.0" layoutY="67.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="144.0" style="-fx-background-color: #F3CBC5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="COUNT BY HEAD">
+      <MenuButton layoutX="210.0" layoutY="67.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="69.0" style="-fx-background-radius: 10; -fx-background-color: #F3CBC5; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="add">
+         <items>
+            <MenuItem mnemonicParsing="false">
+               <graphic>
+                  <Button fx:id="addButton" mnemonicParsing="false" style="-fx-background-color: #F3CBC5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="ADD">
+                     <font>
+                        <Font name="Game of Thrones" size="12.0" />
+                     </font>
+                  </Button>
+               </graphic>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false">
+               <graphic>
+                  <Button fx:id="addIfMinButton" mnemonicParsing="false" style="-fx-background-color: #F3CBC5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="ADD IF MIN">
+                     <font>
+                        <Font name="Game of Thrones" size="12.0" />
+                     </font>
+                  </Button>
+               </graphic>
+            </MenuItem>
+         </items>
          <font>
             <Font name="Game of Thrones" size="12.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
-      </Button>
-      <Button fx:id="executeScriptButton" layoutX="667.0" layoutY="67.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="134.0" style="-fx-background-color: #F3CBC5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="execute script">
+      </MenuButton>
+      <MenuButton layoutX="289.0" layoutY="67.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" style="-fx-background-radius: 10; -fx-background-color: #F3CBC5; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="remove">
+         <items>
+            <MenuItem mnemonicParsing="false">
+               <graphic>
+                  <Button fx:id="removeButton" mnemonicParsing="false" style="-fx-background-color: #F3CBC5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="REMOVE">
+                     <font>
+                        <Font name="Game of Thrones" size="12.0" />
+                     </font>
+                  </Button>
+               </graphic>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false">
+               <graphic>
+                  <Button fx:id="removeGreaterButton" mnemonicParsing="false" style="-fx-background-color: #F3CBC5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="REMOVE GREATER">
+                     <font>
+                        <Font name="Game of Thrones" size="12.0" />
+                     </font>
+                  </Button>
+               </graphic>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false">
+               <graphic>
+                  <Button fx:id="removeLowerButton" mnemonicParsing="false" style="-fx-background-color: #F3CBC5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="REMOVE LOWER">
+                     <font>
+                        <Font name="Game of Thrones" size="12.0" />
+                     </font>
+                  </Button>
+               </graphic>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false">
+               <graphic>
+                  <Button fx:id="clearButton" mnemonicParsing="false" style="-fx-background-color: #F3CBC5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="CLEAR">
+                     <font>
+                        <Font name="Game of Thrones" size="12.0" />
+                     </font>
+                  </Button>
+               </graphic>
+            </MenuItem>
+         </items>
          <font>
             <Font name="Game of Thrones" size="12.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
-      </Button>
+      </MenuButton>
    </children>
 </AnchorPane>

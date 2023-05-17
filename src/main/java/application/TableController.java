@@ -54,21 +54,6 @@ public class TableController {
     private TableColumn<Dragon, Float> y;
 
     @FXML
-    private Button addButton;
-
-    @FXML
-    private Button countByHeadButton;
-
-    @FXML
-    private Button executeScriptButton;
-
-    @FXML
-    private Button maxByHeadButton;
-
-    @FXML
-    private Button removeButton;
-
-    @FXML
     private Button helpButton;
 
     @FXML
@@ -76,6 +61,24 @@ public class TableController {
 
     @FXML
     private Button mapButton;
+
+    @FXML
+    private Button addButton;
+
+    @FXML
+    private Button addIfMinButton;
+
+    @FXML
+    private Button clearButton;
+
+    @FXML
+    private Button removeButton;
+
+    @FXML
+    private Button removeGreaterButton;
+
+    @FXML
+    private Button removeLowerButton;
 
     @FXML
     void initialize() {

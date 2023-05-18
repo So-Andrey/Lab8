@@ -34,12 +34,12 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <Text layoutX="667.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="authorization">
+      <Text fx:id="label" layoutX="667.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="authorization" textAlignment="CENTER">
          <font>
             <Font name="Game of Thrones" size="23.0" />
          </font>
       </Text>
-      <Button fx:id="becomeAMemberButton" layoutX="650.0" layoutY="629.0" mnemonicParsing="false" style="-fx-background-radius: 10; -fx-background-color: #F9F5D2;" text="Don't have an account? Sign Up" underline="true">
+      <Button fx:id="becomeAMemberButton" layoutX="650.0" layoutY="629.0" mnemonicParsing="false" style="-fx-background-radius: 10; -fx-background-color: #F9F5D2;" text="Don't have an account? Sign Up" textAlignment="CENTER" underline="true">
          <font>
             <Font size="20.0" />
          </font>
@@ -47,7 +47,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="logInButton" layoutX="725.0" layoutY="535.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="140.0" style="-fx-background-radius: 10; -fx-background-color: #EFC88B;" text="Log In">
+      <Button fx:id="logInButton" layoutX="717.0" layoutY="535.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="159.0" style="-fx-background-radius: 10; -fx-background-color: #EFC88B;" text="Log In" textAlignment="CENTER">
          <font>
             <Font size="35.0" />
          </font>

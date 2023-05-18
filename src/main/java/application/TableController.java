@@ -18,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class TableController {
@@ -77,7 +78,7 @@ public class TableController {
     private Button clearButton;
 
     @FXML
-    private Button removeButton;
+    private Button removeByIdButton;
 
     @FXML
     private Button removeGreaterButton;
@@ -98,9 +99,9 @@ public class TableController {
         addButton.setOnAction(event -> setAddButton());
         clearButton.setOnAction(event -> setClearButton());
         executeScriptButton.setOnAction(event -> setExecuteScriptButton());
-        removeButton.setOnAction(event -> setRemoveButton());
-        removeGreaterButton.setOnAction(event -> setRemoveGreaterButton());
-        removeLowerButton.setOnAction(event -> setRemoveLowerButton());
+        removeByIdButton.setOnAction(event -> setRemoveButton("removeById"));
+        removeGreaterButton.setOnAction(event -> setRemoveButton("removeGreater"));
+        removeLowerButton.setOnAction(event -> setRemoveButton("removeLower"));
     }
 
     private void updateTable() {
@@ -260,36 +261,17 @@ public class TableController {
     }
 
     private void setExecuteScriptButton() {
-        Stage primaryStage = new Stage();
-        GridPane gridPane = new GridPane();
-        gridPane.setPadding(new Insets(10));
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-
-        TextField textField1 = new TextField();
-        textField1.setPromptText("Path");
-        gridPane.add(textField1, 1, 0);
-        Button submit = new Button("SUBMIT");
-        gridPane.add(submit, 1, 1);
-
-        Scene scene = new Scene(gridPane, 200, 100);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-        submit.setOnAction(event -> {
-            try {
-                Invoker.setSplit(new String[]{"", textField1.getText()});
-                new ExecuteScriptCommand().execute();
-                submit.getScene().getWindow().hide();
-                Thread.sleep(10);
-                updateTable();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        });
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Choose a script file");
+            String filePath = fileChooser.showOpenDialog(null).getAbsolutePath();
+            Invoker.setSplit(new String[]{"", filePath});
+            new ExecuteScriptCommand().execute();
+            updateTable();
+        } catch (Exception ignored) {}
     }
 
-    private void setRemoveButton() {
+    private void setRemoveButton(String type) {
         Stage primaryStage = new Stage();
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(10));
@@ -309,67 +291,11 @@ public class TableController {
         submit.setOnAction(event -> {
             try {
                 Invoker.setSplit(new String[]{"", textField1.getText()});
-                new RemoveByIdCommand().execute();
-                submit.getScene().getWindow().hide();
-                Thread.sleep(10);
-                updateTable();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        });
-    }
-
-    private void setRemoveGreaterButton() {
-        Stage primaryStage = new Stage();
-        GridPane gridPane = new GridPane();
-        gridPane.setPadding(new Insets(10));
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-
-        TextField textField1 = new TextField();
-        textField1.setPromptText("ID");
-        gridPane.add(textField1, 1, 0);
-        Button submit = new Button("SUBMIT");
-        gridPane.add(submit, 1, 1);
-
-        Scene scene = new Scene(gridPane, 200, 100);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-        submit.setOnAction(event -> {
-            try {
-                Invoker.setSplit(new String[]{"", textField1.getText()});
-                new RemoveGreaterCommand().execute();
-                submit.getScene().getWindow().hide();
-                Thread.sleep(10);
-                updateTable();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        });
-    }
-
-    private void setRemoveLowerButton() {
-        Stage primaryStage = new Stage();
-        GridPane gridPane = new GridPane();
-        gridPane.setPadding(new Insets(10));
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-
-        TextField textField1 = new TextField();
-        textField1.setPromptText("ID");
-        gridPane.add(textField1, 1, 0);
-        Button submit = new Button("SUBMIT");
-        gridPane.add(submit, 1, 1);
-
-        Scene scene = new Scene(gridPane, 200, 100);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-        submit.setOnAction(event -> {
-            try {
-                Invoker.setSplit(new String[]{"", textField1.getText()});
-                new RemoveLowerCommand().execute();
+                switch (type) {
+                    case "removeById" -> new RemoveByIdCommand().execute();
+                    case "removeLower" -> new RemoveLowerCommand().execute();
+                    case "removeGreater" -> new RemoveGreaterCommand().execute();
+                }
                 submit.getScene().getWindow().hide();
                 Thread.sleep(10);
                 updateTable();

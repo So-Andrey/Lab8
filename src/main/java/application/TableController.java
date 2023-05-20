@@ -406,6 +406,11 @@ public class TableController {
         gridPane.add(checkBox, 4, 7);
         Button button = new Button("Submit");
         button.setOnAction(event -> {
+            textField1.setPromptText("");
+            textField2.setPromptText("");
+            textField3.setPromptText("");
+            textField4.setPromptText("");
+            textField5.setPromptText("");
             label6.setTextFill(javafx.scene.paint.Color.BLACK);
             label7.setTextFill(javafx.scene.paint.Color.BLACK);
             label8.setTextFill(javafx.scene.paint.Color.BLACK);
@@ -488,7 +493,8 @@ public class TableController {
                             button.getScene().getWindow().hide();
                             updateTable();
                         } else {
-                            System.out.println("Dragon is too old"); // to GUI
+                            textField2.setText("");
+                            textField2.setPromptText("too old");
                         }
                     }
                 }

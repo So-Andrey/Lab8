@@ -14,6 +14,7 @@ public class MapController {
 
     @FXML
     void initialize() {
+        tableButton.setFont(MyApplication.appFont(14));
         tableButton.setOnAction(event -> {
             tableButton.getScene().getWindow().hide();
             try {

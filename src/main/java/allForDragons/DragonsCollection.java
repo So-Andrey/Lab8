@@ -55,7 +55,7 @@ public class DragonsCollection {
                     float y = resultSet.getFloat(11);
                     DragonsCollection.getDragons().add(new Dragon(name, new Coordinates(x, y), age, color, type, character, new DragonHead(eyesCount), creator, creationDate, id));
                 } catch (SQLException | NullPointerException | IllegalArgumentException exception) {
-                    DatabaseConnection.executeStatement("delete * from dragons where id = " + resultSet.getLong(1));
+                    DatabaseConnection.executeStatement("delete from dragons where id = " + resultSet.getLong(1));
                 }
             }
         } catch (SQLException ignored) {}

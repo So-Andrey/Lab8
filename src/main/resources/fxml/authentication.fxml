@@ -21,7 +21,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <Text layoutX="644.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DRAGONS COLLECTION MANAGER" wrappingWidth="341.0478515625">
+      <Text fx:id="title" layoutX="644.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DRAGONS COLLECTION MANAGER" wrappingWidth="341.0478515625">
          <font>
             <Font name="Game of Thrones" size="39.0" />
          </font>

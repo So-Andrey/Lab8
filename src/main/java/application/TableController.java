@@ -2,10 +2,7 @@ package application;
 
 import allForDragons.*;
 import commands.Invoker;
-import commands.concreteCommand.ExecuteScriptCommand;
-import commands.concreteCommand.RemoveByIdCommand;
-import commands.concreteCommand.RemoveGreaterCommand;
-import commands.concreteCommand.RemoveLowerCommand;
+import commands.concreteCommand.*;
 import database.DatabaseConnection;
 import database.UserAuthentication;
 import javafx.collections.FXCollections;
@@ -17,7 +14,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -63,6 +62,9 @@ public class TableController {
     private Label currentUser;
 
     @FXML
+    private Text label;
+
+    @FXML
     private Button helpButton;
 
     @FXML
@@ -73,6 +75,9 @@ public class TableController {
 
     @FXML
     private Button addButton;
+
+    @FXML
+    private MenuButton removeMenuButton;
 
     @FXML
     private Button clearButton;
@@ -91,20 +96,9 @@ public class TableController {
 
     @FXML
     void initialize() {
-        currentUser.setText(UserAuthentication.getCurrentUser());
-        updateTable();
-        mapButton.setOnAction(event -> setMapButton());
-        helpButton.setOnAction(event -> setHelpButton());
-        infoButton.setOnAction(event -> setInfoButton());
-        addButton.setOnAction(event -> setAddButton());
-        clearButton.setOnAction(event -> setClearButton());
-        executeScriptButton.setOnAction(event -> setExecuteScriptButton());
-        removeByIdButton.setOnAction(event -> setRemoveButton("removeById"));
-        removeGreaterButton.setOnAction(event -> setRemoveButton("removeGreater"));
-        removeLowerButton.setOnAction(event -> setRemoveButton("removeLower"));
-    }
 
-    private void updateTable() {
+        setFont();
+
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         creator.setCellValueFactory(new PropertyValueFactory<>("creator"));
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -116,7 +110,49 @@ public class TableController {
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
         character.setCellValueFactory(new PropertyValueFactory<>("character"));
         eyesCount.setCellValueFactory(new PropertyValueFactory<>("eyesCount"));
+
+        currentUser.setText(UserAuthentication.getCurrentUser());
+        updateTable();
+
+        mapButton.setOnAction(event -> setMapButton());
+        helpButton.setOnAction(event -> setHelpButton());
+        infoButton.setOnAction(event -> setInfoButton());
+        addButton.setOnAction(event -> setAddButton());
+        clearButton.setOnAction(event -> setClearButton());
+        executeScriptButton.setOnAction(event -> setExecuteScriptButton());
+        removeByIdButton.setOnAction(event -> setRemoveButton("removeById"));
+        removeGreaterButton.setOnAction(event -> setRemoveButton("removeGreater"));
+        removeLowerButton.setOnAction(event -> setRemoveButton("removeLower"));
+
+//        здесь все должно работать с бд
+//        name.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition().getRow()).setName(event.getNewValue()));
+//        age.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition().getRow()).setAge(event.getNewValue()));
+//        x.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition().getRow()).getCoordinates().setX(event.getNewValue()));
+//        y.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition().getRow()).getCoordinates().setY(event.getNewValue()));
+//        color.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition().getRow()).setColor(Color.getColor(event.getNewValue())));
+//        type.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition().getRow()).setType(DragonType.getType(event.getNewValue())));
+//        character.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition().getRow()).setCharacter(DragonCharacter.getCharacter(event.getNewValue())));
+//        eyesCount.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition().getRow()).getHead().setEyesCount(event.getNewValue()));
+
+    }
+
+    private void updateTable() {
         table.setItems(FXCollections.observableList(new ArrayList<>(DragonsCollection.getDragons())));
+    }
+
+    private void setFont() {
+        removeMenuButton.setFont(MyApplication.appFont(12));
+        label.setFont(MyApplication.appFont(13));
+        currentUser.setFont(MyApplication.appFont(13));
+        helpButton.setFont(MyApplication.appFont(12));
+        infoButton.setFont(MyApplication.appFont(12));
+        mapButton.setFont(MyApplication.appFont(12));
+        addButton.setFont(MyApplication.appFont(12));
+        clearButton.setFont(MyApplication.appFont(12));
+        removeByIdButton.setFont(MyApplication.appFont(12));
+        removeGreaterButton.setFont(MyApplication.appFont(12));
+        removeLowerButton.setFont(MyApplication.appFont(12));
+        executeScriptButton.setFont(MyApplication.appFont(12));
     }
 
     private void setAddButton() {
@@ -148,20 +184,23 @@ public class TableController {
         gridPane.add(label4, 0, 3);
         gridPane.add(textField4, 1, 3);
 
-        Label label5 = new Label("Color:");
-        TextField textField5 = new TextField();
+        Label label5 = new Label("Color:"); // radio buttons?
+        ChoiceBox<String> colorChoiceBox = new ChoiceBox<>();
+        colorChoiceBox.setItems(FXCollections.observableList(List.of("Brown", "Green", "Orange", "null")));
         gridPane.add(label5, 0, 4);
-        gridPane.add(textField5, 1, 4);
+        gridPane.add(colorChoiceBox, 1, 4);
 
         Label label6 = new Label("Type:");
-        TextField textField6 = new TextField();
+        ChoiceBox<String> typeChoiceBox = new ChoiceBox<>();
+        typeChoiceBox.setItems(FXCollections.observableList(List.of("Water", "Underground", "Fire")));
         gridPane.add(label6, 0, 5);
-        gridPane.add(textField6, 1, 5);
+        gridPane.add(typeChoiceBox, 1, 5);
 
         Label label7 = new Label("Character:");
-        TextField textField7 = new TextField();
+        ChoiceBox<String> characterChoiceBox = new ChoiceBox<>();
+        characterChoiceBox.setItems(FXCollections.observableList(List.of("Cunning", "Wise", "Chaotic evil", "null")));
         gridPane.add(label7, 0, 6);
-        gridPane.add(textField7, 1, 6);
+        gridPane.add(characterChoiceBox, 1, 6);
 
         Label label8 = new Label("Eyes count:");
         TextField textField8 = new TextField();
@@ -184,9 +223,9 @@ public class TableController {
                         textField1.getText(),
                         new Coordinates(Long.parseLong(textField3.getText()), Float.parseFloat(textField4.getText())),
                         Long.parseLong(textField2.getText()),
-                        Color.getColor(textField5.getText()),
-                        DragonType.getType(textField6.getText()),
-                        DragonCharacter.getCharacter(textField7.getText()),
+                        Color.getColor(colorChoiceBox.getValue()),
+                        DragonType.getType(typeChoiceBox.getValue()),
+                        DragonCharacter.getCharacter(characterChoiceBox.getValue()),
                         new DragonHead(Double.parseDouble(textField8.getText())));
                 if (!ifMin.isSelected()) {
                     DragonAdder.dragonToAdderToDB(dragon);
@@ -273,6 +312,8 @@ public class TableController {
 
     private void setRemoveButton(String type) {
         Stage primaryStage = new Stage();
+        primaryStage.setMaximized(false);
+        primaryStage.setResizable(false);
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(10));
         gridPane.setHgap(10);

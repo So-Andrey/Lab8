@@ -18,7 +18,7 @@ public enum DragonCharacter {
      * @return возвращает характер, полученный из строки */
     public static DragonCharacter getCharacter(String string) {
         for (DragonCharacter dragonCharacter : DragonCharacter.values()) {
-            if (dragonCharacter.number.equals(string)|dragonCharacter.name.equals(string)) return dragonCharacter;
+            if (dragonCharacter.number.equals(string)|dragonCharacter.name.equals(string.toUpperCase())) return dragonCharacter;
         }
         return null;
     }

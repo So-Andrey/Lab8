@@ -17,7 +17,7 @@ public enum DragonType {
      * @return возвращает тип, полученный из строки */
     public static DragonType getType(String string) {
         for (DragonType dragonType : DragonType.values()) {
-            if (dragonType.number.equals(string)|dragonType.name.equals(string)) return dragonType;
+            if (dragonType.number.equals(string)|dragonType.name.equals(string.toUpperCase())) return dragonType;
         }
         return null;
     }

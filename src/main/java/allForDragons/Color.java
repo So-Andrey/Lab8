@@ -17,7 +17,7 @@ public enum Color {
      * @return возвращает цвет, полученный из строки */
     public static Color getColor(String string) {
         for (Color color : Color.values()) {
-            if (color.number.equals(string)|color.name.equals(string)) return color;
+            if (color.number.equals(string)|color.name.equals(string.toUpperCase())) return color;
         }
         return null;
     }

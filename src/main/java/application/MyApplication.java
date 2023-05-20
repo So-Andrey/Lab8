@@ -3,6 +3,7 @@ package application;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -18,4 +19,9 @@ public class MyApplication extends Application {
     public static void open() {
         launch();
     }
+
+    public static Font appFont(double size) {
+        return Font.loadFont(MyApplication.class.getResourceAsStream("/assets/game-of-thrones.ttf"), size);
+    }
+
 }

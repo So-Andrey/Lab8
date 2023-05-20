@@ -18,6 +18,9 @@ public class AuthenticationController {
     private boolean registration = false;
 
     @FXML
+    private Text title;
+
+    @FXML
     private Text label;
 
     @FXML
@@ -34,6 +37,8 @@ public class AuthenticationController {
 
     @FXML
     void initialize() {
+        title.setFont(MyApplication.appFont(39));
+        label.setFont(MyApplication.appFont(23));
         becomeAMemberButton.setOnAction(event -> {
             if (registration) {
                 label.setText("authorisation");

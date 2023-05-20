@@ -38,8 +38,9 @@ public class RemoveGreaterCommand implements Command {
             throw new NullPointerException();
         }
     }
-    public static String executeFromGUI(String id) {
+    public String executeFromGUI(String id) {
         try {
+            Long.parseLong(id);
             List<Dragon> matchedDragons = DragonsCollection.getDragons().stream().filter(dragon -> dragon.getId() == Long.parseLong(id)).toList();
             if (matchedDragons.isEmpty()) {
                 return "There is no such dragon";

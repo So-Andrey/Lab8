@@ -14,7 +14,8 @@ public class ExecuteScriptCommand implements Command {
     private boolean recursion = false;
     /** Метод, считывающий команды из файла
      * @see ExecuteScriptCommand#invokerFromFile(Scanner) */
-    private void executorFromFile(String file) throws FileNotFoundException {
+    private String executorFromFile(String file) throws FileNotFoundException {
+        String result = null;
         Scanner scanner = new Scanner(new File(file));
         while (scanner.hasNext() & !recursion) {
             Invoker.setSplit(scanner.nextLine().split(" "));
@@ -25,10 +26,12 @@ public class ExecuteScriptCommand implements Command {
                     recursionChecker = 0;
                     recursion = true;
                     System.out.println("Рекурсия!!!");
+                    result = "Recursion!!!";
                 }
             } catch (NullPointerException ignored) {}
         }
         scanner.close();
+        return result;
     }
     /** Метод, выполняющий команды из файла
      * @see AddCommand#adderFromFile(Scanner)
@@ -73,6 +76,18 @@ public class ExecuteScriptCommand implements Command {
             }
         } catch (FileNotFoundException fileNotFoundException) {
             System.out.println("Файл не найден");
+        }
+    }
+    public String executeFromGUI(String file) {
+        try {
+            if (new File(file).exists() & new File(file).canRead()) {
+                recursion = false;
+                return executorFromFile(file);
+            } else {
+                return "Do not have access to file";
+            }
+        } catch (FileNotFoundException fileNotFoundException) {
+            return "File not found";
         }
     }
     @Override

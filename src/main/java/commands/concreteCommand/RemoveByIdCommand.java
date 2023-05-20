@@ -41,8 +41,9 @@ public class RemoveByIdCommand implements Command {
             throw new NullPointerException();
         }
     }
-    public static String executeFromGUI(String id) {
+    public String executeFromGUI(String id) {
         try {
+            Long.parseLong(id);
             List<Dragon> matchedDragon = DragonsCollection.getDragons().stream().filter((dragon -> dragon.getId() == Long.parseLong(id))).toList();
             if (matchedDragon.isEmpty()) {
                 return "There is no such dragon";

@@ -1,7 +1,6 @@
 package application;
 
 import allForDragons.*;
-import commands.Invoker;
 import commands.concreteCommand.*;
 import database.DatabaseConnection;
 import database.UserAuthentication;
@@ -228,10 +227,16 @@ public class TableController {
         try {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Choose a script file");
-            String filePath = fileChooser.showOpenDialog(null).getAbsolutePath();
-            Invoker.setSplit(new String[]{"", filePath});
-            new ExecuteScriptCommand().execute();
-            updateTable();
+            String result = new ExecuteScriptCommand().executeFromGUI(fileChooser.showOpenDialog(null).getAbsolutePath());
+            if (result != null) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Result");
+                alert.setHeaderText(null);
+                alert.setContentText(result);
+                alert.showAndWait();
+            } else {
+                updateTable();
+            }
         } catch (Exception ignored) {}
     }
 
@@ -260,7 +265,7 @@ public class TableController {
         submit.setOnAction(event -> {
             switch (type) {
                 case "removeById" -> {
-                    String result = RemoveByIdCommand.executeFromGUI(textField.getText());
+                    String result = new RemoveByIdCommand().executeFromGUI(textField.getText());
                     if (result == null) {
                         submit.getScene().getWindow().hide();
                         updateTable();
@@ -269,8 +274,8 @@ public class TableController {
                         textField.setPromptText(result);
                     }
                 }
-                case "removeLower" -> getResultOfDeleting(RemoveLowerCommand.executeFromGUI(textField.getText()), submit.getScene().getWindow(), textField);
-                case "removeGreater" -> getResultOfDeleting(RemoveGreaterCommand.executeFromGUI(textField.getText()), submit.getScene().getWindow(), textField);
+                case "removeLower" -> getResultOfDeleting(new RemoveLowerCommand().executeFromGUI(textField.getText()), submit.getScene().getWindow(), textField);
+                case "removeGreater" -> getResultOfDeleting(new RemoveGreaterCommand().executeFromGUI(textField.getText()), submit.getScene().getWindow(), textField);
             }
         });
     }

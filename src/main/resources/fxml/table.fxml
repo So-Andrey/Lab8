@@ -15,7 +15,7 @@
    <children>
       <AnchorPane layoutX="45.0" layoutY="103.0">
          <children>
-            <TableView fx:id="table" editable="true" layoutX="3.0" layoutY="3.0" prefHeight="571.0" prefWidth="928.0">
+            <TableView fx:id="table" editable="true" layoutX="3.0" layoutY="11.0" prefHeight="571.0" prefWidth="928.0">
               <columns>
                 <TableColumn fx:id="id" editable="false" prefWidth="40.1013298034668" resizable="false" text="ID" />
                 <TableColumn fx:id="creator" editable="false" prefWidth="69.39868927001953" resizable="false" text="Creator" />
@@ -28,10 +28,10 @@
                         <TableColumn fx:id="y" prefWidth="56.6468505859375" resizable="false" text="Y" />
                      </columns>
                   </TableColumn>
-                  <TableColumn fx:id="color" prefWidth="75.36712646484375" resizable="false" text="Color" />
-                  <TableColumn fx:id="type" prefWidth="103.16949462890625" resizable="false" text="Type" />
-                  <TableColumn fx:id="character" prefWidth="101.52264404296875" resizable="false" text="Character" />
-                  <TableColumn fx:id="eyesCount" prefWidth="82.4481201171875" resizable="false" text="Eyes Count" />
+                  <TableColumn fx:id="color" prefWidth="71.5" resizable="false" text="Color" />
+                  <TableColumn fx:id="type" prefWidth="104.0" resizable="false" text="Type" />
+                  <TableColumn fx:id="character" prefWidth="102.8499755859375" resizable="false" text="Character" />
+                  <TableColumn fx:id="eyesCount" prefWidth="89.1500244140625" resizable="false" text="Eyes Count" />
               </columns>
             </TableView>
          </children>
@@ -74,7 +74,7 @@
             </Text>
          </children>
       </AnchorPane>
-      <Button fx:id="executeScriptButton" layoutX="539.0" layoutY="67.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="134.0" style="-fx-background-color: #F3CBC5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="execute script">
+      <Button fx:id="executeScriptButton" layoutX="539.0" layoutY="71.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="134.0" style="-fx-background-color: #F3CBC5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="execute script">
          <font>
             <Font name="Game of Thrones" size="12.0" />
          </font>
@@ -82,7 +82,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <MenuButton fx:id="removeMenuButton" layoutX="429.0" layoutY="67.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" style="-fx-background-radius: 10; -fx-background-color: #F3CBC5; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="remove">
+      <MenuButton fx:id="removeMenuButton" layoutX="429.0" layoutY="71.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" style="-fx-background-radius: 10; -fx-background-color: #F3CBC5; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="remove">
          <items>
             <MenuItem mnemonicParsing="false">
                <graphic>
@@ -140,7 +140,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </MenuButton>
-      <Button fx:id="addButton" layoutX="366.0" layoutY="67.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="53.0" style="-fx-background-color: #F3CBC5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="ADD">
+      <Button fx:id="addButton" layoutX="366.0" layoutY="71.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="53.0" style="-fx-background-color: #F3CBC5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="ADD">
          <font>
             <Font name="Game of Thrones" size="12.0" />
          </font>
@@ -148,5 +148,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <AnchorPane fx:id="scrollSquare" layoutX="960.0" layoutY="669.0" prefHeight="15.0" prefWidth="15.0" style="-fx-background-color: #F3CBC5;" />
    </children>
 </AnchorPane>

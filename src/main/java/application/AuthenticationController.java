@@ -3,15 +3,11 @@ package application;
 import allForDragons.DragonsCollection;
 import database.UserAuthentication;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
-import java.io.IOException;
 
 public class AuthenticationController {
 
@@ -71,18 +67,7 @@ public class AuthenticationController {
                 if (UserAuthentication.userLoggingIn(loginField.getText(), passwordField.getText())) {
                     logInButton.getScene().getWindow().hide();
                     DragonsCollection.putDragonsFromDB();
-                    try {
-                        Stage stage = new Stage();
-                        stage.setTitle("Dragons collection manager");
-                        Scene scene = new Scene(new FXMLLoader(getClass().getResource("/fxml/table.fxml")).load(), 1024, 720);
-                        scene.getStylesheets().add("/css/table.css");
-                        stage.setScene(scene);
-                        stage.setResizable(false);
-                        stage.setMaximized(false);
-                        stage.show();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    MyApplication.openTableWindow();
                 } else {
                     loginField.setText("");
                     passwordField.setText("");

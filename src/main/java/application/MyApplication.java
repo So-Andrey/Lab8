@@ -24,4 +24,18 @@ public class MyApplication extends Application {
         return Font.loadFont(MyApplication.class.getResourceAsStream("/assets/game-of-thrones.ttf"), size);
     }
 
+    public static void openTableWindow() {
+        try {
+            Stage stage = new Stage();
+            stage.setTitle("Dragons collection manager");
+            Scene scene = new Scene(new FXMLLoader(MyApplication.class.getResource("/fxml/table.fxml")).load(), 1024, 720);
+            scene.getStylesheets().add("/css/table.css");
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setMaximized(false);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -41,6 +41,25 @@ public class RemoveByIdCommand implements Command {
             throw new NullPointerException();
         }
     }
+    public static String executeFromGUI(String id) {
+        try {
+            List<Dragon> matchedDragon = DragonsCollection.getDragons().stream().filter((dragon -> dragon.getId() == Long.parseLong(id))).toList();
+            if (matchedDragon.isEmpty()) {
+                return "There is no such dragon";
+            } else {
+                int beforeSize = DragonsCollection.getDragons().size();
+                DatabaseConnection.executeStatement("delete from dragons where id = " + matchedDragon.get(0).getId() + " and creator = '" + UserAuthentication.getCurrentUser() + "'");
+                DragonsCollection.updateFromDB();
+                if (beforeSize == DragonsCollection.getDragons().size()) {
+                    return "This is not your dragon";
+                } else {
+                    return null;
+                }
+            }
+        } catch (NumberFormatException e) {
+            return "Invalid input";
+        }
+    }
     @Override
     public String description() {
         return "remove_by_id id : удалить элемент из коллекции по его id";

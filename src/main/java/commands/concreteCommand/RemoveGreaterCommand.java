@@ -38,6 +38,26 @@ public class RemoveGreaterCommand implements Command {
             throw new NullPointerException();
         }
     }
+    public static String executeFromGUI(String id) {
+        try {
+            List<Dragon> matchedDragons = DragonsCollection.getDragons().stream().filter(dragon -> dragon.getId() == Long.parseLong(id)).toList();
+            if (matchedDragons.isEmpty()) {
+                return "There is no such dragon";
+            } else {
+                List<Dragon> lowerDragons = DragonsCollection.getDragons().stream().filter(dragon -> dragon.getAge() > matchedDragons.get(0).getAge()).toList();
+                if (lowerDragons.isEmpty()) {
+                    return "There is no greater dragons";
+                } else {
+                    int beforeSize = DragonsCollection.getDragons().size();
+                    lowerDragons.forEach(dragon -> DatabaseConnection.executeStatement("delete from dragons where id = " + dragon.getId() + " and creator = '" + UserAuthentication.getCurrentUser() + "'"));
+                    DragonsCollection.updateFromDB();
+                    return "Amount of deleted dragons: " + (beforeSize - DragonsCollection.getDragons().size()) + "\nP.S. (You can only delete dragons you create)";
+                }
+            }
+        } catch (NumberFormatException e) {
+            return "Invalid input";
+        }
+    }
     @Override
     public String description() {
         return "remove_greater {element} : удалить из коллекции все элементы, превышающие заданный";

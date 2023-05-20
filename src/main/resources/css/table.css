@@ -1,27 +1,40 @@
 .table-view {
-    -fx-background-color: transparent;
-}
-
-.table-view:focused {
-    -fx-background-color: transparent;
-}
-
-.table-view .table-header {
-    -fx-background-color: #FF8C4C;
-}
-
-.table-view .column-header-background {
-    -fx-background-color: #FF8C4C;
+    -fx-background-color: #F9F5D2;
 }
 
 .table-view .column-header, .table-view .filler {
     -fx-background-color: transparent;
 }
 
-.table-row-cell:odd {
+.table-cell:odd {
     -fx-background-color: #F3CBC5;
 }
 
-.table-row-cell:even {
+.table-cell:even {
     -fx-background-color: #FCDDD8;
+}
+
+.table-view .scroll-bar {
+    -fx-background-color: #F3CBC5;
+}
+
+.table-view .thumb {
+    -fx-background-color: #FCDDD8;
+}
+
+.table-view .column-header {
+    -fx-border-color: #F3C173;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #EFC88B;
+}
+
+.table-cell {
+    -fx-border-color: #EFC88B;
+    -fx-border-width: 0.5;
+}
+
+.table-row-cell:selected .table-cell {
+    -fx-text-fill: #FF9E00;
 }

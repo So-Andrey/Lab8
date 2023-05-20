@@ -97,6 +97,7 @@ public class TableController {
     @FXML
     void initialize() {
 
+        table.getStyleClass().add("table-view");
         setFont();
 
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -144,9 +145,9 @@ public class TableController {
         removeMenuButton.setFont(MyApplication.appFont(12));
         label.setFont(MyApplication.appFont(13));
         currentUser.setFont(MyApplication.appFont(13));
-        helpButton.setFont(MyApplication.appFont(12));
-        infoButton.setFont(MyApplication.appFont(12));
-        mapButton.setFont(MyApplication.appFont(12));
+        helpButton.setFont(MyApplication.appFont(14));
+        infoButton.setFont(MyApplication.appFont(14));
+        mapButton.setFont(MyApplication.appFont(14));
         addButton.setFont(MyApplication.appFont(12));
         clearButton.setFont(MyApplication.appFont(12));
         removeByIdButton.setFont(MyApplication.appFont(12));

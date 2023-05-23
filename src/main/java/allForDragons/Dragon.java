@@ -97,6 +97,35 @@ public class Dragon implements Comparable<Dragon>{
     public String getCreator() {
         return creator;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public void setAge(Long age) {
+        this.age = age;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public void setType(DragonType type) {
+        this.type = type;
+    }
+
+    public void setCharacter(DragonCharacter character) {
+        this.character = character;
+    }
+
+    public void setHead(DragonHead head) {
+        this.head = head;
+    }
+
     @Override
     public String toString() {
         return "id дракона: " + id + "\n" +

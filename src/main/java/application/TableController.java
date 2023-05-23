@@ -10,8 +10,10 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -105,6 +107,7 @@ public class TableController {
     @FXML
     void initialize() {
 
+        removeMenuButton.getStyleClass().add("menu-button");
         table.getStyleClass().add("table-view");
         setFont();
 
@@ -149,6 +152,13 @@ public class TableController {
 //        character.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition().getRow()).setCharacter(DragonCharacter.getCharacter(event.getNewValue())));
 //        eyesCount.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition().getRow()).getHead().setEyesCount(event.getNewValue()));
 
+    }
+
+    @FXML
+    public void updateName(CellEditEvent cellEditEvent){
+        Dragon dragon = table.getSelectionModel().getSelectedItem();
+        dragon.setName(cellEditEvent.getNewValue().toString());
+        updateTable();
     }
 
     private void updateTable() {
@@ -253,6 +263,7 @@ public class TableController {
         Label label = new Label("ID:");
         gridPane.add(label, 0, 0);
         TextField textField = new TextField();
+        textField.setStyle("-fx-focus-color: #F3C173");
         gridPane.add(textField, 1, 0);
         Button submit = new Button("SUBMIT");
         gridPane.add(submit, 1, 1);
@@ -322,37 +333,46 @@ public class TableController {
 
         Label label1 = new Label("Name:");
         TextField textField1 = new TextField();
+        textField1.setStyle("-fx-focus-color: #F3C173;");
         gridPane.add(label1, 0, 0);
         gridPane.add(textField1, 1, 0);
 
         Label label2 = new Label("Age:");
         TextField textField2 = new TextField();
+        textField2.setStyle("-fx-focus-color: #F3C173;");
         gridPane.add(label2, 0, 1);
         gridPane.add(textField2, 1, 1);
 
         Label label3 = new Label("X Coordinate:");
         TextField textField3 = new TextField();
+        textField3.setStyle("-fx-focus-color: #F3C173;");
         gridPane.add(label3, 0, 2);
         gridPane.add(textField3, 1, 2);
 
         Label label4 = new Label("Y Coordinate:");
         TextField textField4 = new TextField();
+        textField4.setStyle("-fx-focus-color: #F3C173;");
         gridPane.add(label4, 2, 2);
         gridPane.add(textField4, 3, 2);
 
         Label label5 = new Label("Eyes count:");
         TextField textField5 = new TextField();
+        textField5.setStyle("-fx-focus-color: #F3C173;");
         gridPane.add(label5, 0, 3);
         gridPane.add(textField5, 1, 3);
 
         Label label6 = new Label("Color:");
         RadioButton radioButton1 = new RadioButton("Green");
+        radioButton1.setStyle("-fx-focus-color: #F3C173");
         radioButton1.setUserData("green");
         RadioButton radioButton2 = new RadioButton("Brown");
+        radioButton2.setStyle("-fx-focus-color: #F3C173");
         radioButton2.setUserData("brown");
         RadioButton radioButton3 = new RadioButton("Orange");
+        radioButton3.setStyle("-fx-focus-color: #F3C173");
         radioButton3.setUserData("orange");
         RadioButton radioButton4 = new RadioButton("null");
+        radioButton4.setStyle("-fx-focus-color: #F3C173");
         radioButton4.setUserData("null");
         ToggleGroup toggleGroup1 = new ToggleGroup();
         radioButton1.setToggleGroup(toggleGroup1);
@@ -367,10 +387,13 @@ public class TableController {
 
         Label label7 = new Label("Type:");
         RadioButton radioButton5 = new RadioButton("Underground");
+        radioButton5.setStyle("-fx-focus-color: #F3C173");
         radioButton5.setUserData("underground");
         RadioButton radioButton6 = new RadioButton("Fire");
+        radioButton6.setStyle("-fx-focus-color: #F3C173");
         radioButton6.setUserData("fire");
         RadioButton radioButton7 = new RadioButton("Water");
+        radioButton7.setStyle("-fx-focus-color: #F3C173");
         radioButton7.setUserData("water");
         ToggleGroup toggleGroup2 = new ToggleGroup();
         radioButton5.setToggleGroup(toggleGroup2);
@@ -383,14 +406,19 @@ public class TableController {
 
         Label label8 = new Label("Character:");
         RadioButton radioButton10 = new RadioButton("Cunning");
+        radioButton10.setStyle("-fx-focus-color: #F3C173");
         radioButton10.setUserData("cunning");
         RadioButton radioButton8 = new RadioButton("Wise");
+        radioButton8.setStyle("-fx-focus-color: #F3C173");
         radioButton8.setUserData("wise");
         RadioButton radioButton11 = new RadioButton("Chaotic evil");
+        radioButton11.setStyle("-fx-focus-color: #F3C173");
         radioButton11.setUserData("chaotic_evil");
         RadioButton radioButton9 = new RadioButton("Fickle");
+        radioButton9.setStyle("-fx-focus-color: #F3C173");
         radioButton9.setUserData("fickle");
         RadioButton radioButton12 = new RadioButton("null");
+        radioButton12.setStyle("-fx-focus-color: #F3C173");
         radioButton12.setUserData("null");
         ToggleGroup toggleGroup3 = new ToggleGroup();
         radioButton10.setToggleGroup(toggleGroup3);
@@ -410,6 +438,7 @@ public class TableController {
         gridPane.add(label9, 3, 7);
         gridPane.add(checkBox, 4, 7);
         Button button = new Button("Submit");
+        button.setCursor(Cursor.HAND);
         button.setOnAction(event -> {
             textField1.setPromptText("");
             textField2.setPromptText("");
@@ -420,7 +449,7 @@ public class TableController {
             label7.setTextFill(javafx.scene.paint.Color.BLACK);
             label8.setTextFill(javafx.scene.paint.Color.BLACK);
             boolean error = false;
-            if (textField1.getText().isEmpty() | textField1.getText().contains("'")) {
+            if (textField1.getText().trim().isEmpty() | textField1.getText().contains("'")) {
                 textField1.setText("");
                 textField1.setPromptText("Invalid input");
                 error = true;

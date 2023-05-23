@@ -42,11 +42,11 @@ public class AuthenticationController {
                 becomeAMemberButton.setText("Don't have an account? Sign Up");
                 registration = false;
             } else {
-                label.setText("registration");
+                label.setText("   registration");
                 label.setTextAlignment(TextAlignment.CENTER);
                 logInButton.setText("Submit");
                 logInButton.setTextAlignment(TextAlignment.CENTER);
-                becomeAMemberButton.setText("Already registered? Log In");
+                becomeAMemberButton.setText("       Already registered? Log In");
                 registration = true;
             }
         });

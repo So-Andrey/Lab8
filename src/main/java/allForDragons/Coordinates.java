@@ -9,6 +9,15 @@ public class Coordinates {
     public float getY() {
         return y;
     }
+
+    public void setX(long x) {
+        this.x = x;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
     public Coordinates(long x, float y) {
         this.x = x;
         this.y = y;

@@ -149,5 +149,15 @@
          </cursor>
       </Button>
       <AnchorPane fx:id="scrollSquare" layoutX="960.0" layoutY="669.0" prefHeight="15.0" prefWidth="15.0" style="-fx-background-color: #F3CBC5;" />
+      <Button fx:id="logOutButton" layoutY="693.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="67.0" style="-fx-background-color: #F9F5D2;" text="Log Out" underline="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="languageButton" layoutX="952.0" layoutY="693.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="72.0" style="-fx-background-color: #F9F5D2;" text="Language" underline="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>

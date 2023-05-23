@@ -13,6 +13,9 @@ public class UserAuthentication {
     public static String getCurrentUser() {
         return currentUser;
     }
+    public static void logOut() {
+        currentUser = null;
+    }
     /** Метод для регистрации нового пользователя
      * @param login имя нового пользователя
      * @see DatabaseConnection#executePreparedStatement(String, String...)

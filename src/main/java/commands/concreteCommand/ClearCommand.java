@@ -18,6 +18,10 @@ public class ClearCommand implements Command {
         DragonsCollection.updateFromDB();
         System.out.println("Созданная Вами часть коллекции очищена");
     }
+    public void executeFromGUI() {
+        DatabaseConnection.executeStatement("delete from dragons where creator = '" + UserAuthentication.getCurrentUser() + "'");
+        DragonsCollection.updateFromDB();
+    }
     @Override
     public String description() {
         return "clear : очистить коллекцию";

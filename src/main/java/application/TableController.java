@@ -105,6 +105,12 @@ public class TableController {
     private AnchorPane scrollSquare;
 
     @FXML
+    private Button languageButton;
+
+    @FXML
+    private Button logOutButton;
+
+    @FXML
     void initialize() {
 
         removeMenuButton.getStyleClass().add("menu-button");
@@ -141,6 +147,21 @@ public class TableController {
         removeByIdButton.setOnAction(event -> setRemoveButton("removeById"));
         removeGreaterButton.setOnAction(event -> setRemoveButton("removeGreater"));
         removeLowerButton.setOnAction(event -> setRemoveButton("removeLower"));
+        logOutButton.setOnAction(event -> {
+            logOutButton.getScene().getWindow().hide();
+            DragonsCollection.getDragons().clear();
+            UserAuthentication.logOut();
+            Stage stage = new Stage();
+            stage.setTitle("Dragons collection manager");
+            try {
+                stage.setScene(new Scene(new FXMLLoader(getClass().getResource("/fxml/authentication.fxml")).load(), 1024, 720));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            stage.setResizable(false);
+            stage.setMaximized(false);
+            stage.show();
+        });
 
 //        здесь все должно работать с бд
 //        name.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition().getRow()).setName(event.getNewValue()));
@@ -187,15 +208,15 @@ public class TableController {
 
     private void setHelpButton() {
         showAlert("Help", """
-                    map : открыть карту с объектами
-                    info : вывести информацию о коллекции (тип, дата инициализации, количество элементов)
-                    add (if min) : добавить новый элемент в коллекцию (если он наименьший)
-                    remove : удалить элемент из коллекции по его id
-                    remove_greater : удалить из коллекции все элементы, превышающие заданный по id
-                    remove_lower : удалить из коллекции все элементы, меньшие, чем заданный по id
-                    clear : очистить созданную Вами часть коллекции
-                    execute_script : считать и исполнить скрипт из указанного файла
-                    update : обновить значения объекта (осуществляется двойным кликом по ячейке)
+                    Map : открыть карту с объектами
+                    Info : вывести информацию о коллекции (тип, дата инициализации, количество элементов)
+                    Add (If min) : добавить новый элемент в коллекцию (если он наименьший)
+                    Remove by id : удалить элемент из коллекции по его id
+                    Remove greater : удалить из коллекции все элементы, превышающие заданный по id
+                    Remove lower : удалить из коллекции все элементы, меньшие, чем заданный по id
+                    Clear : очистить созданную Вами часть коллекции
+                    Execute script : считать и исполнить скрипт из указанного файла
+                    Update : обновить значения объекта (осуществляется двойным кликом по ячейке)
                     Вы можете удалять или изменять дракона только, если являетесь его создателем!!!
                     """);
     }
@@ -215,10 +236,9 @@ public class TableController {
     }
 
     private void setClearButton() {
-        DatabaseConnection.executeStatement("delete from dragons where creator = '" + UserAuthentication.getCurrentUser() + "'");
-        DragonsCollection.updateFromDB();
+        new ClearCommand().executeFromGUI();
         updateTable();
-        showAlert("Result", "Your part of collection has been cleaned");
+        showAlert("Result", "Your part of collection has been cleaned" + "\nP.S. (You can only delete dragons you create)");
     }
 
     private void setExecuteScriptButton() {

@@ -47,6 +47,14 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <Button fx:id="alreadyRegistered" layoutX="675.0" layoutY="629.0" mnemonicParsing="false" style="-fx-background-radius: 10; -fx-background-color: #F9F5D2;" text="Already registered? Log In" textAlignment="CENTER" underline="true" visible="false">
+         <font>
+            <Font size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
       <Button fx:id="logInButton" layoutX="717.0" layoutY="535.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="159.0" style="-fx-background-radius: 10; -fx-background-color: #EFC88B;" text="Log In" textAlignment="CENTER">
          <font>
             <Font size="35.0" />

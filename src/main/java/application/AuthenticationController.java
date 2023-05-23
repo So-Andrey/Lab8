@@ -23,6 +23,9 @@ public class AuthenticationController {
     private Button becomeAMemberButton;
 
     @FXML
+    private Button alreadyRegistered;
+
+    @FXML
     private Button logInButton;
 
     @FXML
@@ -36,19 +39,18 @@ public class AuthenticationController {
         title.setFont(MyApplication.appFont(39));
         label.setFont(MyApplication.appFont(23));
         becomeAMemberButton.setOnAction(event -> {
-            if (registration) {
-                label.setText("authorisation");
-                logInButton.setText("Log In");
-                becomeAMemberButton.setText("Don't have an account? Sign Up");
-                registration = false;
-            } else {
-                label.setText("   registration");
-                label.setTextAlignment(TextAlignment.CENTER);
-                logInButton.setText("Submit");
-                logInButton.setTextAlignment(TextAlignment.CENTER);
-                becomeAMemberButton.setText("       Already registered? Log In");
-                registration = true;
-            }
+            label.setText("   registration");
+            logInButton.setText("Submit");
+            becomeAMemberButton.setVisible(false);
+            alreadyRegistered.setVisible(true);
+            registration = true;
+        });
+        alreadyRegistered.setOnAction(event -> {
+            label.setText("authorisation");
+            logInButton.setText("Log In");
+            alreadyRegistered.setVisible(false);
+            becomeAMemberButton.setVisible(true);
+            registration = false;
         });
         logInButton.setOnAction(event -> {
             if (registration) {

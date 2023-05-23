@@ -155,7 +155,7 @@ public class TableController {
     }
 
     @FXML
-    public void updateName(CellEditEvent cellEditEvent){
+    public void updateName(CellEditEvent cellEditEvent) {
         Dragon dragon = table.getSelectionModel().getSelectedItem();
         dragon.setName(cellEditEvent.getNewValue().toString());
         updateTable();
@@ -182,18 +182,11 @@ public class TableController {
     }
 
     private void setInfoButton() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Info");
-        alert.setHeaderText(null);
-        alert.setContentText(DragonsCollection.getInfo());
-        alert.showAndWait();
+        showAlert("Info", DragonsCollection.getInfo());
     }
 
     private void setHelpButton() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Help");
-        alert.setHeaderText(null);
-        alert.setContentText("""
+        showAlert("Help", """
                     map : открыть карту с объектами
                     info : вывести информацию о коллекции (тип, дата инициализации, количество элементов)
                     add (if min) : добавить новый элемент в коллекцию (если он наименьший)
@@ -205,7 +198,6 @@ public class TableController {
                     update : обновить значения объекта (осуществляется двойным кликом по ячейке)
                     Вы можете удалять или изменять дракона только, если являетесь его создателем!!!
                     """);
-        alert.showAndWait();
     }
 
     private void setMapButton() {
@@ -226,24 +218,16 @@ public class TableController {
         DatabaseConnection.executeStatement("delete from dragons where creator = '" + UserAuthentication.getCurrentUser() + "'");
         DragonsCollection.updateFromDB();
         updateTable();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Result");
-        alert.setHeaderText(null);
-        alert.setContentText("Your part of collection has been cleaned");
-        alert.showAndWait();
+        showAlert("Result", "Your part of collection has been cleaned");
     }
 
     private void setExecuteScriptButton() {
         try {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Choose a script file");
-            String result = new ExecuteScriptCommand().executeFromGUI(fileChooser.showOpenDialog(null).getAbsolutePath());
+            String result = new ExecuteScriptCommand().executeFromGUI(fileChooser.showOpenDialog(table.getScene().getWindow()).getAbsolutePath());
             if (result != null) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Result");
-                alert.setHeaderText(null);
-                alert.setContentText(result);
-                alert.showAndWait();
+                showAlert("Result", result);
             } else {
                 updateTable();
             }
@@ -295,11 +279,7 @@ public class TableController {
         if (result.contains(":")) {
             window.hide();
             updateTable();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Result");
-            alert.setHeaderText(null);
-            alert.setContentText(result);
-            alert.showAndWait();
+            showAlert("Result", result);
         } else {
             textField.setText("");
             textField.setPromptText(result);
@@ -543,5 +523,15 @@ public class TableController {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+    }
+
+    private void showAlert(String title, String text) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(text);
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setStyle("-fx-background-color: #F9F5D2");
+        alert.showAndWait();
     }
 }

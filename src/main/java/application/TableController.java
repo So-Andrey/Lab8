@@ -2,7 +2,6 @@ package application;
 
 import allForDragons.*;
 import commands.concreteCommand.*;
-import database.DatabaseConnection;
 import database.UserAuthentication;
 import exceptions.IllegalValueOfXException;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,11 +12,11 @@ import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -26,6 +25,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.FloatStringConverter;
+import javafx.util.converter.LongStringConverter;
 
 public class TableController {
 
@@ -120,20 +122,121 @@ public class TableController {
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         creator.setCellValueFactory(new PropertyValueFactory<>("creator"));
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        name.setCellFactory(TextFieldTableCell.forTableColumn());
+        name.setOnEditCommit(event -> {
+            try {
+                DragonUpdater.updateNameFromGUI(event.getRowValue(), event.getNewValue());
+                updateTable();
+            } catch (InputMismatchException inputMismatchException) {
+                showAlert("Error", "Invalid input");
+                table.refresh();
+            } catch (NullPointerException nullPointerException) {
+                showAlert("Error", "You can only edit dragons you create");
+                table.refresh();
+            }
+        });
         creationDate.setCellValueFactory(new PropertyValueFactory<>("creationDate"));
         age.setCellValueFactory(new PropertyValueFactory<>("age"));
+        age.setCellFactory(TextFieldTableCell.forTableColumn(new LongStringConverter()));
+        age.setOnEditCommit(event -> {
+            try {
+                DragonUpdater.updateAgeFromGUI(event.getRowValue(), event.getNewValue());
+                updateTable();
+            } catch (InputMismatchException inputMismatchException) {
+                showAlert("Error", "Invalid input (age > 0)");
+                table.refresh();
+            } catch (NullPointerException nullPointerException) {
+                showAlert("Error", "You can only edit dragons you create");
+                table.refresh();
+            }
+        });
         x.setCellValueFactory(new PropertyValueFactory<>("x"));
+        x.setCellFactory(TextFieldTableCell.forTableColumn(new LongStringConverter()));
+        x.setOnEditCommit(event -> {
+            try {
+                DragonUpdater.updateXFromGUI(event.getRowValue(), event.getNewValue());
+                updateTable();
+            } catch (InputMismatchException inputMismatchException) {
+                showAlert("Error", "Invalid input (x <= 610)");
+                table.refresh();
+            } catch (NullPointerException nullPointerException) {
+                showAlert("Error", "You can only edit dragons you create");
+                table.refresh();
+            }
+        });
         y.setCellValueFactory(new PropertyValueFactory<>("y"));
+        y.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter()));
+        y.setOnEditCommit(event -> {
+            try {
+                DragonUpdater.updateYFromGUI(event.getRowValue(), event.getNewValue());
+                updateTable();
+            } catch (NullPointerException nullPointerException) {
+                showAlert("Error", "You can only edit dragons you create");
+                table.refresh();
+            }
+        });
         color.setCellValueFactory(dragonStringCellDataFeatures ->
                 dragonStringCellDataFeatures.getValue().getColor() == null
                         ? new SimpleStringProperty("null")
                         : new SimpleStringProperty(dragonStringCellDataFeatures.getValue().getColor().toString()));
-        type.setCellValueFactory(new PropertyValueFactory<>("type"));
+        color.setCellFactory(TextFieldTableCell.forTableColumn());
+        color.setOnEditCommit(event -> {
+            try {
+                DragonUpdater.updateColorFromGUI(event.getRowValue(), event.getNewValue());
+                updateTable();
+            } catch (InputMismatchException inputMismatchException) {
+                showAlert("Error", "Invalid input");
+                table.refresh();
+            } catch (NullPointerException nullPointerException) {
+                showAlert("Error", "You can only edit dragons you create");
+                table.refresh();
+            }
+        });
+        type.setCellValueFactory(dragonStringCellDataFeatures -> new SimpleStringProperty(dragonStringCellDataFeatures.getValue().getType().toString()));
+        type.setCellFactory(TextFieldTableCell.forTableColumn());
+        type.setOnEditCommit(event -> {
+            try {
+                DragonUpdater.updateTypeFromGUI(event.getRowValue(), event.getNewValue());
+                updateTable();
+            } catch (InputMismatchException inputMismatchException) {
+                showAlert("Error", "Invalid input");
+                table.refresh();
+            } catch (NullPointerException nullPointerException) {
+                showAlert("Error", "You can only edit dragons you create");
+                table.refresh();
+            }
+        });
         character.setCellValueFactory(dragonStringCellDataFeatures ->
                 dragonStringCellDataFeatures.getValue().getCharacter() == null
                         ? new SimpleStringProperty("null")
                         : new SimpleStringProperty(dragonStringCellDataFeatures.getValue().getCharacter().toString()));
+        character.setCellFactory(TextFieldTableCell.forTableColumn());
+        character.setOnEditCommit(event -> {
+            try {
+                DragonUpdater.updateCharacterFromGUI(event.getRowValue(), event.getNewValue());
+                updateTable();
+            } catch (InputMismatchException inputMismatchException) {
+                showAlert("Error", "Invalid input");
+                table.refresh();
+            } catch (NullPointerException nullPointerException) {
+                showAlert("Error", "You can only edit dragons you create");
+                table.refresh();
+            }
+        });
         eyesCount.setCellValueFactory(new PropertyValueFactory<>("eyesCount"));
+        eyesCount.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        eyesCount.setOnEditCommit(event -> {
+            try {
+                DragonUpdater.updateHeadFromGUI(event.getRowValue(), event.getNewValue());
+                updateTable();
+            } catch (InputMismatchException inputMismatchException) {
+                showAlert("Error", "Invalid input");
+                table.refresh();
+            } catch (NullPointerException nullPointerException) {
+                showAlert("Error", "You can only edit dragons you create");
+                table.refresh();
+            }
+        });
 
         currentUser.setText(UserAuthentication.getCurrentUser());
         updateTable();
@@ -149,37 +252,8 @@ public class TableController {
         removeLowerButton.setOnAction(event -> setRemoveButton("removeLower"));
         logOutButton.setOnAction(event -> {
             logOutButton.getScene().getWindow().hide();
-            DragonsCollection.getDragons().clear();
-            UserAuthentication.logOut();
-            Stage stage = new Stage();
-            stage.setTitle("Dragons collection manager");
-            try {
-                stage.setScene(new Scene(new FXMLLoader(getClass().getResource("/fxml/authentication.fxml")).load(), 1024, 720));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            stage.setResizable(false);
-            stage.setMaximized(false);
-            stage.show();
+            setLogOutButton();
         });
-
-//        здесь все должно работать с бд
-//        name.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition().getRow()).setName(event.getNewValue()));
-//        age.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition().getRow()).setAge(event.getNewValue()));
-//        x.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition().getRow()).getCoordinates().setX(event.getNewValue()));
-//        y.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition().getRow()).getCoordinates().setY(event.getNewValue()));
-//        color.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition().getRow()).setColor(Color.getColor(event.getNewValue())));
-//        type.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition().getRow()).setType(DragonType.getType(event.getNewValue())));
-//        character.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition().getRow()).setCharacter(DragonCharacter.getCharacter(event.getNewValue())));
-//        eyesCount.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition().getRow()).getHead().setEyesCount(event.getNewValue()));
-
-    }
-
-    @FXML
-    public void updateName(CellEditEvent cellEditEvent) {
-        Dragon dragon = table.getSelectionModel().getSelectedItem();
-        dragon.setName(cellEditEvent.getNewValue().toString());
-        updateTable();
     }
 
     private void updateTable() {
@@ -293,17 +367,6 @@ public class TableController {
                 case "removeGreater" -> getResultOfDeleting(new RemoveGreaterCommand().executeFromGUI(textField.getText()), submit.getScene().getWindow(), textField);
             }
         });
-    }
-
-    private void getResultOfDeleting(String result, Window window, TextField textField) {
-        if (result.contains(":")) {
-            window.hide();
-            updateTable();
-            showAlert("Result", result);
-        } else {
-            textField.setText("");
-            textField.setPromptText(result);
-        }
     }
 
     private void setAddButton() {
@@ -543,6 +606,32 @@ public class TableController {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+    }
+
+    private void setLogOutButton() {
+        DragonsCollection.getDragons().clear();
+        UserAuthentication.logOut();
+        Stage stage = new Stage();
+        stage.setTitle("Dragons collection manager");
+        try {
+            stage.setScene(new Scene(new FXMLLoader(getClass().getResource("/fxml/authentication.fxml")).load(), 1024, 720));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        stage.setResizable(false);
+        stage.setMaximized(false);
+        stage.show();
+    }
+
+    private void getResultOfDeleting(String result, Window window, TextField textField) {
+        if (result.contains(":")) {
+            window.hide();
+            updateTable();
+            showAlert("Result", result);
+        } else {
+            textField.setText("");
+            textField.setPromptText(result);
+        }
     }
 
     private void showAlert(String title, String text) {

@@ -410,4 +410,89 @@ public class DragonUpdater {
             throw new InputMismatchException();
         }
     }
+    public static void updateNameFromGUI(Dragon dragon, String name) {
+        if (dragon.getCreator().equals(UserAuthentication.getCurrentUser())) {
+            if (!(name.trim().isEmpty() | name.contains("'"))) {
+                DatabaseConnection.executeStatement("update dragons set name = '" + name + "' where id = " + dragon.getId());
+                DragonsCollection.updateFromDB();
+            } else {
+                throw new InputMismatchException();
+            }
+        } else {
+            throw new NullPointerException();
+        }
+    }
+    public static void updateAgeFromGUI(Dragon dragon, Long age) {
+        if (dragon.getCreator().equals(UserAuthentication.getCurrentUser())) {
+            if (age <= 0) throw new InputMismatchException();
+            DatabaseConnection.executeStatement("update dragons set age = '" + age + "' where id = " + dragon.getId());
+            DragonsCollection.updateFromDB();
+        } else {
+            throw new NullPointerException();
+        }
+    }
+    public static void updateXFromGUI(Dragon dragon, Long x) {
+        if (dragon.getCreator().equals(UserAuthentication.getCurrentUser())) {
+            if (x > 610) throw new InputMismatchException();
+            DatabaseConnection.executeStatement("update dragons set x = '" + x + "' where id = " + dragon.getId());
+            DragonsCollection.updateFromDB();
+        } else {
+            throw new NullPointerException();
+        }
+    }
+    public static void updateYFromGUI(Dragon dragon, Float y) {
+        if (dragon.getCreator().equals(UserAuthentication.getCurrentUser())) {
+            DatabaseConnection.executeStatement("update dragons set y = '" + y + "' where id = " + dragon.getId());
+            DragonsCollection.updateFromDB();
+        } else {
+            throw new NullPointerException();
+        }
+    }
+    public static void updateColorFromGUI(Dragon dragon, String color) {
+        if (dragon.getCreator().equals(UserAuthentication.getCurrentUser())) {
+            if (color.matches("[1-3]") || color.equalsIgnoreCase("GREEN") || color.equalsIgnoreCase("ORANGE") || color.equalsIgnoreCase("BROWN") || color.isEmpty() || color.equalsIgnoreCase("null") || color.equals("0")) {
+                Color newColor = Color.getColor(color);
+                DatabaseConnection.executeStatement("update dragons set color = '" + newColor + "' where id = " + dragon.getId());
+                DragonsCollection.updateFromDB();
+            } else {
+                throw new InputMismatchException();
+            }
+        } else {
+            throw new NullPointerException();
+        }
+    }
+    public static void updateTypeFromGUI(Dragon dragon, String type) {
+        if (dragon.getCreator().equals(UserAuthentication.getCurrentUser())) {
+            if (type.matches("[1-3]") || type.equalsIgnoreCase("WATER") || type.equalsIgnoreCase("UNDERGROUND") || type.equalsIgnoreCase("FIRE")) {
+                DragonType newType = DragonType.getType(type);
+                DatabaseConnection.executeStatement("update dragons set type = '" + newType + "' where id = " + dragon.getId());
+                DragonsCollection.updateFromDB();
+            } else {
+                throw new InputMismatchException();
+            }
+        } else {
+            throw new NullPointerException();
+        }
+    }
+    public static void updateCharacterFromGUI(Dragon dragon, String character) {
+        if (dragon.getCreator().equals(UserAuthentication.getCurrentUser())) {
+            if (character.matches("[1-4]") || character.equalsIgnoreCase("CUNNING") || character.equalsIgnoreCase("WISE") || character.equalsIgnoreCase("CHAOTIC_EVIL") || character.equalsIgnoreCase("FICKLE") || character.trim().isEmpty() || character.equalsIgnoreCase("null") || character.equals("0")) {
+                DragonCharacter dragonCharacter = DragonCharacter.getCharacter(character);
+                DatabaseConnection.executeStatement("update dragons set character = '" + dragonCharacter + "' where id = " + dragon.getId());
+                DragonsCollection.updateFromDB();
+            } else {
+                throw new InputMismatchException();
+            }
+        } else {
+            throw new NullPointerException();
+        }
+    }
+    public static void updateHeadFromGUI(Dragon dragon, Double eyesCount) {
+        if (dragon.getCreator().equals(UserAuthentication.getCurrentUser())) {
+            DatabaseConnection.executeStatement("update dragons set eyescount = '" + eyesCount + "' where id = " + dragon.getId());
+            DragonsCollection.updateFromDB();
+        } else {
+            throw new NullPointerException();
+        }
+    }
 }

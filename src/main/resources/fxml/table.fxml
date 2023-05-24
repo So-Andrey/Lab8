@@ -19,7 +19,7 @@
               <columns>
                 <TableColumn fx:id="id" editable="false" prefWidth="40.1013298034668" resizable="false" text="ID" />
                 <TableColumn fx:id="creator" editable="false" prefWidth="69.39868927001953" resizable="false" text="Creator" />
-                  <TableColumn fx:id="name" onEditCommit="#updateName" prefWidth="75.42436218261719" resizable="false" text="Name" />
+                  <TableColumn fx:id="name" prefWidth="75.42436218261719" resizable="false" text="Name" />
                   <TableColumn fx:id="creationDate" editable="false" prefWidth="204.07562255859375" resizable="false" text="Creation Date" />
                   <TableColumn fx:id="age" prefWidth="56.20733642578125" resizable="false" text="Age" />
                   <TableColumn prefWidth="61.784942626953125" resizable="false" text="Coordinates">

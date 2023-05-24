@@ -317,6 +317,22 @@ public class TableController {
 
     private void setExecuteScriptButton() {
         try {
+            showAlert("README", """
+                    add {element} : добавить новый элемент в коллекцию
+                    add_if_min {element} : добавить новый элемент в коллекцию, если его значение меньше, чем у наименьшего элемента этой коллекции
+                    execute_script file_name : считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит
+                    show : вывести в стандартный поток вывода все элементы коллекции в строковом представлении
+                    clear : очистить коллекцию
+                    update id : обновить значение элемента коллекции, id которого равен заданному
+                    remove_by_id id : удалить элемент из коллекции по его id
+                    remove_greater {element} : удалить из коллекции все элементы, превышающие заданный
+                    remove_lower {element} : удалить из коллекции все элементы, меньшие, чем заданный
+                    max_by_head : вывести любой объект из коллекции, значение поля head которого является максимальным
+                    print_ascending : вывести элементы коллекции в порядке возрастания
+                    help : вывести справку по доступным командам
+                    count_by_head head : вывести количество элементов, значение поля head которых равно заданному
+                    info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)
+                    """);
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Choose a script file");
             String result = new ExecuteScriptCommand().executeFromGUI(fileChooser.showOpenDialog(table.getScene().getWindow()).getAbsolutePath());
@@ -325,7 +341,9 @@ public class TableController {
             } else {
                 updateTable();
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void setRemoveButton(String type) {

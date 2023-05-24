@@ -5,7 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import l10n_i18n.Language;
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 public class MyApplication extends Application {
     @Override
@@ -22,6 +24,16 @@ public class MyApplication extends Application {
 
     public static Font appFont(double size) {
         return Font.loadFont(MyApplication.class.getResourceAsStream("/assets/game-of-thrones.ttf"), size);
+    }
+
+    private static ResourceBundle appLanguage = Language.en;
+
+    public static ResourceBundle getAppLanguage() {
+        return appLanguage;
+    }
+
+    public static void setAppLanguage(ResourceBundle appLanguage) {
+        MyApplication.appLanguage = appLanguage;
     }
 
     public static void openTableWindow() {

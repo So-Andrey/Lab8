@@ -39,6 +39,14 @@
     -fx-text-fill: #FF9E00;
 }
 
-.menu-button .menu-item {
+.remove-menu-button .menu-item {
     -fx-background-color: #F9F5D2;
+}
+
+.language-menu-button .menu-item {
+    -fx-background-color: #F9F5D2;
+}
+
+.language-menu-button .arrow {
+    -fx-rotate: 180;
 }

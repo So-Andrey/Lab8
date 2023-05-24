@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" style="-fx-background-color: #F9F5D2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TableController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" style="-fx-background-color: #F9F5D2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TableController">
    <children>
       <AnchorPane layoutX="45.0" layoutY="103.0">
          <children>
@@ -154,10 +154,45 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="languageButton" layoutX="952.0" layoutY="693.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="72.0" style="-fx-background-color: #F9F5D2;" text="Language" underline="true">
+      <MenuButton fx:id="languageMenuButton" layoutX="928.0" layoutY="693.0" mnemonicParsing="false" style="-fx-background-color: #F9F5D2;" text="Languages" underline="true">
+        <items>
+          <MenuItem mnemonicParsing="false">
+               <graphic>
+                  <Button fx:id="enLangButton" mnemonicParsing="false" style="-fx-background-color: #F9F5D2;" text="English (US)" underline="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </graphic>
+            </MenuItem>
+          <MenuItem mnemonicParsing="false">
+               <graphic>
+                  <Button fx:id="ruLangButton" mnemonicParsing="false" style="-fx-background-color: #F9F5D2;" text="Русский" underline="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+               </graphic>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false">
+               <graphic>
+                  <Button fx:id="frLangButton" mnemonicParsing="false" style="-fx-background-color: #F9F5D2;" text="Français" underline="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+               </graphic>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false">
+               <graphic>
+                  <Button fx:id="trLangButton" mnemonicParsing="false" style="-fx-background-color: #F9F5D2;" text="Türk" underline="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+               </graphic>
+            </MenuItem>
+        </items>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
-      </Button>
+      </MenuButton>
    </children>
 </AnchorPane>

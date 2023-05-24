@@ -16,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.ResourceBundle;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
@@ -28,8 +29,21 @@ import javafx.stage.Window;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.FloatStringConverter;
 import javafx.util.converter.LongStringConverter;
+import l10n_i18n.Language;
 
 public class TableController {
+
+    @FXML
+    public Button enLangButton;
+
+    @FXML
+    public Button ruLangButton;
+
+    @FXML
+    public Button frLangButton;
+
+    @FXML
+    public Button trLangButton;
 
     @FXML
     private TableView<Dragon> table;
@@ -107,7 +121,7 @@ public class TableController {
     private AnchorPane scrollSquare;
 
     @FXML
-    private Button languageButton;
+    private MenuButton languageMenuButton;
 
     @FXML
     private Button logOutButton;
@@ -115,7 +129,8 @@ public class TableController {
     @FXML
     void initialize() {
 
-        removeMenuButton.getStyleClass().add("menu-button");
+        removeMenuButton.getStyleClass().add("remove-menu-button");
+        languageMenuButton.getStyleClass().add("language-menu-button");
         table.getStyleClass().add("table-view");
         setFont();
 
@@ -254,6 +269,15 @@ public class TableController {
             logOutButton.getScene().getWindow().hide();
             setLogOutButton();
         });
+        enLangButton.setOnAction(event -> updateLanguage(Language.en));
+        ruLangButton.setOnAction(event -> updateLanguage(Language.ru));
+        frLangButton.setOnAction(event -> updateLanguage(Language.fr));
+        trLangButton.setOnAction(event -> updateLanguage(Language.tr));
+    }
+
+    private void updateLanguage(ResourceBundle language) {
+        MyApplication.setAppLanguage(language);
+        // all changes + this button in other windows
     }
 
     private void updateTable() {

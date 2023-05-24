@@ -277,7 +277,7 @@ public class TableController {
 
     private void updateLanguage(ResourceBundle language) {
         MyApplication.setAppLanguage(language);
-        // all changes + this button in other windows
+        //TODO all changes + this button in other windows
     }
 
     private void updateTable() {

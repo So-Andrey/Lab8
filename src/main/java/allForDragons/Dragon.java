@@ -4,6 +4,7 @@ import database.DatabaseConnection;
 import database.UserAuthentication;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Dragon implements Comparable<Dragon>{
@@ -85,8 +86,9 @@ public class Dragon implements Comparable<Dragon>{
     public long getCreationTime() {
         return creationDate.getTime();
     }
-    public Date getCreationDate() {
-        return creationDate;
+    public String getCreationDate() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+        return simpleDateFormat.format(creationDate);
     }
     public DragonHead getHead() {
         return head;
@@ -97,35 +99,6 @@ public class Dragon implements Comparable<Dragon>{
     public String getCreator() {
         return creator;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCoordinates(Coordinates coordinates) {
-        this.coordinates = coordinates;
-    }
-
-    public void setAge(Long age) {
-        this.age = age;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    public void setType(DragonType type) {
-        this.type = type;
-    }
-
-    public void setCharacter(DragonCharacter character) {
-        this.character = character;
-    }
-
-    public void setHead(DragonHead head) {
-        this.head = head;
-    }
-
     @Override
     public String toString() {
         return "id дракона: " + id + "\n" +

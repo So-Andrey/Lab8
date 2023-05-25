@@ -80,6 +80,9 @@ public class TableController {
     public RadioButton eyesCountRadioButton;
 
     @FXML
+    public Button countByHeadButton;
+
+    @FXML
     private TableView<Dragon> table;
 
     @FXML
@@ -326,6 +329,7 @@ public class TableController {
         addButton.setOnAction(event -> setAddButton());
         clearButton.setOnAction(event -> setClearButton());
         executeScriptButton.setOnAction(event -> setExecuteScriptButton());
+        countByHeadButton.setOnAction(event -> setCountByHeadButton());
         removeByIdButton.setOnAction(event -> setRemoveButton("removeById"));
         removeGreaterButton.setOnAction(event -> setRemoveButton("removeGreater"));
         removeLowerButton.setOnAction(event -> setRemoveButton("removeLower"));
@@ -381,6 +385,7 @@ public class TableController {
         removeGreaterButton.setFont(MyApplication.appFont(12));
         removeLowerButton.setFont(MyApplication.appFont(12));
         executeScriptButton.setFont(MyApplication.appFont(12));
+        countByHeadButton.setFont(MyApplication.appFont(12));
     }
 
     private void setInfoButton() {
@@ -735,6 +740,43 @@ public class TableController {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+    }
+
+    private void setCountByHeadButton() {
+        Stage primaryStage = new Stage();
+        primaryStage.setMaximized(false);
+        primaryStage.setResizable(false);
+        GridPane gridPane = new GridPane();
+        gridPane.setStyle("-fx-background-color: #F9F5D2");
+        gridPane.setPadding(new Insets(10));
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+
+        Label label = new Label("Eyes Count:");
+        gridPane.add(label, 0, 0);
+        TextField textField = new TextField();
+        textField.setStyle("-fx-focus-color: #F3C173");
+        gridPane.add(textField, 1, 0);
+        Button submit = new Button("SUBMIT");
+        gridPane.add(submit, 1, 1);
+
+        Scene scene = new Scene(gridPane, 270, 80);
+        scene.getStylesheets().add("/css/table.css");
+        submit.getStyleClass().add("submit-button");
+        primaryStage.initModality(Modality.APPLICATION_MODAL);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        submit.setOnAction(event -> {
+            try {
+                double eyesCount = Double.parseDouble(textField.getText());
+                submit.getScene().getWindow().hide();
+                showAlert("RESULT", "The number of dragons with a given number of eyes: " + DragonsCollection.getDragons().stream().filter(dragon -> dragon.getHead().getEyesCount() == eyesCount).count());
+            } catch (NumberFormatException numberFormatException) {
+                textField.setText("");
+                textField.setPromptText("Invalid input");
+            }
+        });
     }
 
     private void setLogOutButton() {

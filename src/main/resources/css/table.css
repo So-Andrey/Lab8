@@ -39,7 +39,7 @@
     -fx-text-fill: #FF9E00;
 }
 
-.remove-menu-button .menu-item {
+.menu-button .menu-item {
     -fx-background-color: #F9F5D2;
 }
 
@@ -49,4 +49,16 @@
 
 .language-menu-button .arrow {
     -fx-rotate: 180;
+}
+
+.submit-button {
+    -fx-background-color: #F3CBC5;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #FF8C4C;
+    -fx-cursor: HAND;
+}
+
+.table-view > .virtual-flow > .corner{
+    -fx-background-color: #F3CBC5;
 }

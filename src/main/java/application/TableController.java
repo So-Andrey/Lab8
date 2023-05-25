@@ -6,6 +6,8 @@ import database.UserAuthentication;
 import exceptions.IllegalValueOfXException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -18,7 +20,6 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.ResourceBundle;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
@@ -44,6 +45,39 @@ public class TableController {
 
     @FXML
     public Button trLangButton;
+
+    @FXML
+    public RadioButton idRadioButton;
+
+    @FXML
+    public RadioButton creatorRadioButton;
+
+    @FXML
+    public RadioButton nameRadioButton;
+
+    @FXML
+    public RadioButton creationDateRadioButton;
+
+    @FXML
+    public RadioButton ageRadioButton;
+
+    @FXML
+    public RadioButton xRadioButton;
+
+    @FXML
+    public RadioButton colorRadioButton;
+
+    @FXML
+    public RadioButton yRadioButton;
+
+    @FXML
+    public RadioButton typeRadioButton;
+
+    @FXML
+    public RadioButton characterRadioButton;
+
+    @FXML
+    public RadioButton eyesCountRadioButton;
 
     @FXML
     private TableView<Dragon> table;
@@ -118,18 +152,48 @@ public class TableController {
     private Button executeScriptButton;
 
     @FXML
-    private AnchorPane scrollSquare;
-
-    @FXML
     private MenuButton languageMenuButton;
 
     @FXML
     private Button logOutButton;
 
     @FXML
+    private TextField searchTextField;
+
+    @FXML
+    private MenuButton searchMenuButton;
+
+    private final ToggleGroup searchToggleGroup = new ToggleGroup();
+
+    @FXML
     void initialize() {
 
-        removeMenuButton.getStyleClass().add("remove-menu-button");
+        idRadioButton.setToggleGroup(searchToggleGroup);
+        creatorRadioButton.setToggleGroup(searchToggleGroup);
+        nameRadioButton.setToggleGroup(searchToggleGroup);
+        creationDateRadioButton.setToggleGroup(searchToggleGroup);
+        ageRadioButton.setToggleGroup(searchToggleGroup);
+        xRadioButton.setToggleGroup(searchToggleGroup);
+        yRadioButton.setToggleGroup(searchToggleGroup);
+        colorRadioButton.setToggleGroup(searchToggleGroup);
+        typeRadioButton.setToggleGroup(searchToggleGroup);
+        characterRadioButton.setToggleGroup(searchToggleGroup);
+        eyesCountRadioButton.setToggleGroup(searchToggleGroup);
+        searchToggleGroup.selectToggle(nameRadioButton);
+        idRadioButton.setUserData("ID");
+        creatorRadioButton.setUserData("Creator");
+        nameRadioButton.setUserData("Name");
+        creationDateRadioButton.setUserData("Creation Date");
+        ageRadioButton.setUserData("Age");
+        xRadioButton.setUserData("X Coordinate");
+        yRadioButton.setUserData("Y Coordinate");
+        colorRadioButton.setUserData("Color");
+        typeRadioButton.setUserData("Type");
+        characterRadioButton.setUserData("Character");
+        eyesCountRadioButton.setUserData("Eyes Count");
+
+        searchMenuButton.getStyleClass().add("menu-button");
+        removeMenuButton.getStyleClass().add("menu-button");
         languageMenuButton.getStyleClass().add("language-menu-button");
         table.getStyleClass().add("table-view");
         setFont();
@@ -276,13 +340,32 @@ public class TableController {
     }
 
     private void updateLanguage(ResourceBundle language) {
-        MyApplication.setAppLanguage(language);
+        if (!MyApplication.getAppLanguage().equals(language)) {
+            MyApplication.setAppLanguage(language);
+        }
         //TODO all changes + this button in other windows
     }
 
     private void updateTable() {
-        scrollSquare.setVisible(DragonsCollection.getDragons().size() >= 21);
-        table.setItems(FXCollections.observableList(new ArrayList<>(DragonsCollection.getDragons())));
+        FilteredList<Dragon> filteredData = new FilteredList<>(FXCollections.observableList(new ArrayList<>(DragonsCollection.getDragons())), b -> true);
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> filteredData.setPredicate(dragon -> {
+            if (newValue.trim().isEmpty()) return true;
+            return switch (searchToggleGroup.getSelectedToggle().getUserData().toString()) {
+                case "ID" -> String.valueOf(dragon.getId()).toLowerCase().contains(newValue.toLowerCase());
+                case "Creator" -> dragon.getCreator().toLowerCase().contains(newValue.toLowerCase());
+                case "Creation Date" -> dragon.getCreationDate().toLowerCase().contains(newValue.toLowerCase());
+                case "Age" -> String.valueOf(dragon.getAge()).toLowerCase().contains(newValue.toLowerCase());
+                case "X Coordinate" -> String.valueOf(dragon.getCoordinates().getX()).toLowerCase().contains(newValue.toLowerCase());
+                case "Y Coordinate" -> String.valueOf(dragon.getCoordinates().getY()).toLowerCase().contains(newValue.toLowerCase());
+                case "Color" -> String.valueOf(dragon.getColor()).toLowerCase().contains(newValue.toLowerCase());
+                case "Type" -> String.valueOf(dragon.getType()).toLowerCase().contains(newValue.toLowerCase());
+                case "Character" -> String.valueOf(dragon.getCharacter()).toLowerCase().contains(newValue.toLowerCase());
+                case "Eyes Count" -> String.valueOf(dragon.getHead().getEyesCount()).toLowerCase().contains(newValue.toLowerCase());
+                default -> dragon.getName().toLowerCase().contains(newValue.toLowerCase());
+            };}));
+        SortedList<Dragon> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(table.comparatorProperty());
+        table.setItems(sortedData);
     }
 
     private void setFont() {
@@ -389,6 +472,8 @@ public class TableController {
         gridPane.add(submit, 1, 1);
 
         Scene scene = new Scene(gridPane, 210, 80);
+        scene.getStylesheets().add("/css/table.css");
+        submit.getStyleClass().add("submit-button");
         primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -542,7 +627,7 @@ public class TableController {
         CheckBox checkBox = new CheckBox();
         gridPane.add(label9, 3, 7);
         gridPane.add(checkBox, 4, 7);
-        Button button = new Button("Submit");
+        Button button = new Button("SUBMIT");
         button.setCursor(Cursor.HAND);
         button.setOnAction(event -> {
             textField1.setPromptText("");
@@ -644,6 +729,8 @@ public class TableController {
         gridPane.add(button, 2, 7);
 
         Scene scene = new Scene(gridPane, 700, 270);
+        scene.getStylesheets().add("/css/table.css");
+        button.getStyleClass().add("submit-button");
         primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.setScene(scene);
         primaryStage.show();

@@ -5,14 +5,78 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" style="-fx-background-color: #F9F5D2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TableController">
    <children>
+      <MenuButton fx:id="searchMenuButton" layoutX="565.0" layoutY="688.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="45.0" style="-fx-background-color: #FCDDD8; -fx-border-color: #FF8C4C; -fx-background-radius: 10; -fx-border-radius: 10;" textAlignment="JUSTIFY">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <items>
+            <MenuItem mnemonicParsing="false" text="ID">
+               <graphic>
+                  <RadioButton fx:id="idRadioButton" mnemonicParsing="false" />
+               </graphic>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" text="Creator">
+               <graphic>
+                  <RadioButton fx:id="creatorRadioButton" mnemonicParsing="false" />
+               </graphic>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" text="Name">
+               <graphic>
+                  <RadioButton fx:id="nameRadioButton" mnemonicParsing="false" />
+               </graphic>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" text="Creation Date">
+               <graphic>
+                  <RadioButton fx:id="creationDateRadioButton" mnemonicParsing="false" />
+               </graphic>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" text="Age">
+               <graphic>
+                  <RadioButton fx:id="ageRadioButton" mnemonicParsing="false" />
+               </graphic>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" text="X Coordinate">
+               <graphic>
+                  <RadioButton mnemonicParsing="false" fx:id="xRadioButton" />
+               </graphic>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" text="Y Coordinate">
+               <graphic>
+                  <RadioButton fx:id="yRadioButton" mnemonicParsing="false" />
+               </graphic>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" text="Color">
+               <graphic>
+                  <RadioButton fx:id="colorRadioButton" mnemonicParsing="false" />
+               </graphic>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" text="Type">
+               <graphic>
+                  <RadioButton fx:id="typeRadioButton" mnemonicParsing="false" />
+               </graphic>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" text="Character">
+               <graphic>
+                  <RadioButton fx:id="characterRadioButton" mnemonicParsing="false" />
+               </graphic>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" text="Eyes Count">
+               <graphic>
+                  <RadioButton fx:id="eyesCountRadioButton" mnemonicParsing="false" />
+               </graphic>
+            </MenuItem>
+         </items>
+      </MenuButton>
       <AnchorPane layoutX="45.0" layoutY="103.0">
          <children>
             <TableView fx:id="table" editable="true" layoutX="3.0" layoutY="11.0" prefHeight="571.0" prefWidth="928.0">
@@ -148,7 +212,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <AnchorPane fx:id="scrollSquare" layoutX="960.0" layoutY="669.0" prefHeight="15.0" prefWidth="15.0" style="-fx-background-color: #F3CBC5;" />
       <Button fx:id="logOutButton" layoutY="693.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="67.0" style="-fx-background-color: #F9F5D2;" text="Log Out" underline="true">
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -194,5 +257,9 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </MenuButton>
+      <TextField fx:id="searchTextField" layoutX="423.0" layoutY="688.0" promptText="Search" style="-fx-background-color: #FCDDD8; -fx-background-radius: 10; -fx-border-color: #FF8C4C; -fx-border-radius: 10;">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></TextField>
    </children>
 </AnchorPane>

@@ -1,6 +1,7 @@
 package commands.concreteCommand;
 
 import allForDragons.*;
+import application.MyApplication;
 import commands.Command;
 import commands.CommandArgsChecker;
 import commands.Invoker;
@@ -38,20 +39,20 @@ public class RemoveGreaterCommand implements Command {
             Long.parseLong(id);
             List<Dragon> matchedDragons = DragonsCollection.getDragons().stream().filter(dragon -> dragon.getId() == Long.parseLong(id)).toList();
             if (matchedDragons.isEmpty()) {
-                return "There is no such dragon";
+                return MyApplication.getAppLanguage().getString("no_dragon");
             } else {
                 List<Dragon> lowerDragons = DragonsCollection.getDragons().stream().filter(dragon -> dragon.getAge() > matchedDragons.get(0).getAge()).toList();
                 if (lowerDragons.isEmpty()) {
-                    return "There is no greater dragons";
+                    return MyApplication.getAppLanguage().getString("no_greater");
                 } else {
                     int beforeSize = DragonsCollection.getDragons().size();
                     lowerDragons.forEach(dragon -> DatabaseConnection.executeStatement("delete from dragons where id = " + dragon.getId() + " and creator = '" + UserAuthentication.getCurrentUser() + "'"));
                     DragonsCollection.updateFromDB();
-                    return "Amount of deleted dragons: " + (beforeSize - DragonsCollection.getDragons().size()) + "\nP.S. (You can only delete dragons you create)";
+                    return MyApplication.getAppLanguage().getString("amount") + ": " + (beforeSize - DragonsCollection.getDragons().size()) + "\n" + MyApplication.getAppLanguage().getString("delete_ps");
                 }
             }
         } catch (NumberFormatException e) {
-            return "Invalid input";
+            return MyApplication.getAppLanguage().getString("invalid_inp");
         }
     }
     @Override

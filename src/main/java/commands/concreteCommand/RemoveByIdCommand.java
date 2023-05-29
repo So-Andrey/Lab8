@@ -2,6 +2,7 @@ package commands.concreteCommand;
 
 import allForDragons.Dragon;
 import allForDragons.DragonsCollection;
+import application.MyApplication;
 import commands.Command;
 import commands.CommandArgsChecker;
 import commands.Invoker;
@@ -38,19 +39,19 @@ public class RemoveByIdCommand implements Command {
             Long.parseLong(id);
             List<Dragon> matchedDragon = DragonsCollection.getDragons().stream().filter((dragon -> dragon.getId() == Long.parseLong(id))).toList();
             if (matchedDragon.isEmpty()) {
-                return "There is no such dragon";
+                return MyApplication.getAppLanguage().getString("no_dragon");
             } else {
                 int beforeSize = DragonsCollection.getDragons().size();
                 DatabaseConnection.executeStatement("delete from dragons where id = " + matchedDragon.get(0).getId() + " and creator = '" + UserAuthentication.getCurrentUser() + "'");
                 DragonsCollection.updateFromDB();
                 if (beforeSize == DragonsCollection.getDragons().size()) {
-                    return "This is not your dragon";
+                    return MyApplication.getAppLanguage().getString("not_your");
                 } else {
                     return null;
                 }
             }
         } catch (NumberFormatException e) {
-            return "Invalid input";
+            return MyApplication.getAppLanguage().getString("invalid_inp");
         }
     }
     @Override

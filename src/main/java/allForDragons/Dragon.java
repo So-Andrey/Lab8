@@ -87,8 +87,7 @@ public class Dragon implements Comparable<Dragon>{
         return creationDate.getTime();
     }
     public String getCreationDate() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
-        return simpleDateFormat.format(creationDate);
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z").format(creationDate);
     }
     public DragonHead getHead() {
         return head;

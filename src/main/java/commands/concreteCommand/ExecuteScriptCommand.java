@@ -1,5 +1,6 @@
 package commands.concreteCommand;
 
+import application.MyApplication;
 import commands.Command;
 import commands.CommandArgsChecker;
 import commands.Invoker;
@@ -25,9 +26,9 @@ public class ExecuteScriptCommand implements Command {
                 } else {
                     recursionChecker = 0;
                     recursion = true;
-                    result = "Recursion!!!";
+                    result = MyApplication.getAppLanguage().getString("recursion");
                 }
-            } catch (NullPointerException ignored) {}
+            } catch (Exception ignored) {}
         }
         scanner.close();
         return result;
@@ -79,10 +80,10 @@ public class ExecuteScriptCommand implements Command {
                 recursion = false;
                 return executorFromFile(file);
             } else {
-                return "Do not have access to file";
+                return MyApplication.getAppLanguage().getString("no_access");
             }
         } catch (FileNotFoundException fileNotFoundException) {
-            return "File not found";
+            return MyApplication.getAppLanguage().getString("not_found");
         }
     }
     @Override

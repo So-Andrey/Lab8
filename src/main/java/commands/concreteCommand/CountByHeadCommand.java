@@ -1,6 +1,7 @@
 package commands.concreteCommand;
 
 import allForDragons.DragonsCollection;
+import application.MyApplication;
 import commands.Command;
 import commands.CommandArgsChecker;
 import commands.Invoker;
@@ -10,7 +11,7 @@ public class CountByHeadCommand implements Command {
     /** Метод, выводящий количество драконов с заданным количеством глаз
      * @param eyesCount заданное количество глаз */
     private String getCountOfDragons(double eyesCount) {
-        return "The number of dragons with a given number of eyes: " + DragonsCollection.getDragons().stream().filter(dragon -> dragon.getHead().getEyesCount() == eyesCount).count();
+        return MyApplication.getAppLanguage().getString("count_by_head") + ": " + DragonsCollection.getDragons().stream().filter(dragon -> dragon.getHead().getEyesCount() == eyesCount).count();
     }
     /** Метод, выводящий количество элементов, значение поля head которых равно заданному с помощью getCountOfDragons
      * @see CountByHeadCommand#getCountOfDragons(double)
@@ -19,7 +20,7 @@ public class CountByHeadCommand implements Command {
     public void execute() {
         CommandArgsChecker.commandArgsChecker(1);
         if (DragonsCollection.getDragons().isEmpty()) {
-            result.add("The number of dragons with a given number of eyes: 0");
+            result.add(MyApplication.getAppLanguage().getString("count_by_head") + ": 0");
         } else {
             try {
                 result.add(getCountOfDragons(Double.parseDouble(Invoker.getSplit()[1])));

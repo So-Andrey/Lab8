@@ -28,7 +28,6 @@ public class UserAuthentication {
                 String salt = saltGetter();
                 byte[] hash = md.digest(("*63&^mVLC(#" + password + salt).getBytes(StandardCharsets.UTF_8));
                 DatabaseConnection.executePreparedStatement("INSERT INTO USERS (login, hash, salt) VALUES (?, ?, ?)", login, Arrays.toString(hash), salt);
-                System.out.println("Вы успешно прошли регистрацию");
                 return true;
             }
         } catch (SQLException | NullPointerException | NoSuchAlgorithmException ignored) {}

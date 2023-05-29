@@ -1,8 +1,10 @@
 package allForDragons;
 
+import application.MyApplication;
 import database.DatabaseConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class DragonsCollection {
@@ -15,9 +17,9 @@ public class DragonsCollection {
     }
     /** Метод, выводящий информацию о коллекции */
     public static String getInfo() {
-        return  "Тип коллекции: " + dragons.getClass().getTypeName().split(".util.")[1] + "\n" +
-                "Дата инициализации: " + dateOfInitialization + "\n" +
-                "Количество элементов: " + dragons.size() + "\n";
+        return MyApplication.getAppLanguage().getString("coll_type") + ": " + dragons.getClass().getTypeName().split(".util.")[1] + "\n" +
+                MyApplication.getAppLanguage().getString("coll_date") + ": " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z").format(dateOfInitialization) + "\n" +
+                MyApplication.getAppLanguage().getString("coll_amount") + ": " + dragons.size() + "\n";
     }
     /** Метод для добавления драконов из базы данных */
     public static void putDragonsFromDB() {

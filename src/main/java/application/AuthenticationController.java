@@ -36,9 +36,8 @@ public class AuthenticationController {
     @FXML
     void initialize() {
         title.setFont(MyApplication.appFont(39));
-        label.setFont(MyApplication.appFont(23));
         becomeAMemberButton.setOnAction(event -> {
-            label.setText("   registration");
+            label.setText("registration");
             logInButton.setText("Submit");
             becomeAMemberButton.setVisible(false);
             alreadyRegistered.setVisible(true);
@@ -53,7 +52,7 @@ public class AuthenticationController {
         });
         logInButton.setOnAction(event -> {
             if (registration) {
-                if (UserAuthentication.userRegistration(loginField.getText(), passwordField.getText())) {
+                if (UserAuthentication.userRegistration(loginField.getText().trim(), passwordField.getText())) {
                     label.setText("authorisation");
                     logInButton.setText("Log In");
                     loginField.setText("");
@@ -65,7 +64,7 @@ public class AuthenticationController {
                     loginField.setPromptText("Login already exists");
                 }
             } else {
-                if (UserAuthentication.userLoggingIn(loginField.getText(), passwordField.getText())) {
+                if (UserAuthentication.userLoggingIn(loginField.getText().trim(), passwordField.getText())) {
                     logInButton.getScene().getWindow().hide();
                     DragonsCollection.putDragonsFromDB();
                     MyApplication.openTableWindow();

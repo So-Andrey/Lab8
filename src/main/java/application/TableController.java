@@ -384,12 +384,15 @@ public class TableController {
         clearButton.setText(MyApplication.getAppLanguage().getString("clear"));
         executeScriptButton.setText(MyApplication.getAppLanguage().getString("execute_script"));
         countByHeadButton.setText(MyApplication.getAppLanguage().getString("count_by_head"));
-        mapButton.setText(MyApplication.getAppLanguage().getString("map"));
         infoButton.setText(MyApplication.getAppLanguage().getString("info"));
         helpButton.setText(MyApplication.getAppLanguage().getString("help_button"));
         logOutButton.setText(MyApplication.getAppLanguage().getString("log_out"));
         label.setText(MyApplication.getAppLanguage().getString("user") + ":");
-
+        if (map) {
+            mapButton.setText(MyApplication.getAppLanguage().getString("table"));
+        } else {
+            mapButton.setText(MyApplication.getAppLanguage().getString("map"));
+        }
     }
 
     private void updateTable() {

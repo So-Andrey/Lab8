@@ -14,7 +14,7 @@ public class MyApplication extends Application {
     public void start(Stage stage) throws IOException {
         stage.setTitle("Dragons collection manager");
         Scene scene = new Scene(new FXMLLoader(getClass().getResource("/fxml/authentication.fxml")).load(), 1024, 720);
-        scene.getStylesheets().add("/css/table.css");
+        scene.getStylesheets().add("/css/style.css");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setMaximized(false);
@@ -43,7 +43,7 @@ public class MyApplication extends Application {
             Stage stage = new Stage();
             stage.setTitle("Dragons collection manager");
             Scene scene = new Scene(new FXMLLoader(MyApplication.class.getResource("/fxml/table.fxml")).load(), 1024, 720);
-            scene.getStylesheets().add("/css/table.css");
+            scene.getStylesheets().add("/css/style.css");
             stage.setScene(scene);
             stage.setResizable(false);
             stage.setMaximized(false);

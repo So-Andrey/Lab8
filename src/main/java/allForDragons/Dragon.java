@@ -1,5 +1,6 @@
 package allForDragons;
 
+import application.MyApplication;
 import database.DatabaseConnection;
 import database.UserAuthentication;
 import java.sql.ResultSet;
@@ -100,16 +101,16 @@ public class Dragon implements Comparable<Dragon>{
     }
     @Override
     public String toString() {
-        return "id дракона: " + id + "\n" +
-                "Имя: " + name + "\n" +
-                "Возраст: " + age + "\n" +
-                "Тип: " + type + "\n" +
-                "Цвет: " + color + "\n" +
-                "Характер: " + character + "\n" +
-                "Количество глаз: " + head.getEyesCount() + "\n" +
-                "Координаты: (" + coordinates.getX() + "; " + coordinates.getY() + ")\n" +
-                "Создатель: " + creator + "\n" +
-                "Дата и время создания: " + creationDate + "\n";
+        return  "ID: " + id + "\n" +
+                MyApplication.getAppLanguage().getString("name") + ": " + name + "\n" +
+                MyApplication.getAppLanguage().getString("age") + ": " + age + "\n" +
+                MyApplication.getAppLanguage().getString("type") + ": " + type + "\n" +
+                MyApplication.getAppLanguage().getString("color") + ": " + color + "\n" +
+                MyApplication.getAppLanguage().getString("character") + ": " + character + "\n" +
+                MyApplication.getAppLanguage().getString("eyes_count") + ": " + head.getEyesCount() + "\n" +
+                MyApplication.getAppLanguage().getString("coordinates") + ": (" + coordinates.getX() + "; " + coordinates.getY() + ")\n" +
+                MyApplication.getAppLanguage().getString("creator") + ": " + creator + "\n" +
+                MyApplication.getAppLanguage().getString("creation_date") + ": " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z").format(creationDate);
     }
     /** Переопределение метода compareTo для сравнения драконов (по возрасту) */
     @Override

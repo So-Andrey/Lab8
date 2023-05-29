@@ -2,6 +2,7 @@ package application;
 
 import allForDragons.*;
 import commands.concreteCommand.*;
+import database.DatabaseConnection;
 import database.UserAuthentication;
 import exceptions.IllegalValueOfXException;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,11 +17,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -434,6 +439,9 @@ public class TableController {
             searchMenuButton.setVisible(true);
             map = false;
         } else {
+            users.clear();
+            getUsersAndColors();
+            updateMap();
             mapButton.setText(MyApplication.getAppLanguage().getString("table"));
             table.setVisible(false);
             searchTextField.setVisible(false);
@@ -446,6 +454,7 @@ public class TableController {
     private void setClearButton() {
         new ClearCommand().executeFromGUI();
         updateTable();
+        if (map) updateMap();
         showAlert("Result", MyApplication.getAppLanguage().getString("cleaned") + "\n" + MyApplication.getAppLanguage().getString("delete_ps"));
     }
 
@@ -459,6 +468,7 @@ public class TableController {
                 showAlert("Result", result);
             } else {
                 updateTable();
+                if (map) updateMap();
                 if (!CountByHeadCommand.isResultEmpty()) {
                     final String[] countByHeadResultString = {""};
                     CountByHeadCommand.getResult().forEach(result1 -> countByHeadResultString[0] += result1 + "\n");
@@ -488,7 +498,7 @@ public class TableController {
         gridPane.add(submit, 1, 1);
 
         Scene scene = new Scene(gridPane, 210, 80);
-        scene.getStylesheets().add("/css/table.css");
+        scene.getStylesheets().add("/css/style.css");
         submit.getStyleClass().add("submit-button");
         primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.setScene(scene);
@@ -501,6 +511,7 @@ public class TableController {
                     if (result == null) {
                         submit.getScene().getWindow().hide();
                         updateTable();
+                        if (map) updateMap();
                     } else {
                         textField.setText("");
                         textField.setPromptText(result);
@@ -722,16 +733,19 @@ public class TableController {
                     DragonAdder.dragonToAdderToDB(dragon);
                     button.getScene().getWindow().hide();
                     updateTable();
+                    if (map) updateMap();
                 } else {
                     if (DragonsCollection.getDragons().isEmpty()) {
                         DragonAdder.dragonToAdderToDB(dragon);
                         button.getScene().getWindow().hide();
                         updateTable();
+                        if (map) updateMap();
                     } else {
                         if (DragonsCollection.getDragons().stream().noneMatch((dragon1 -> dragon.getAge() >= dragon1.getAge()))) {
                             DragonAdder.dragonToAdderToDB(dragon);
                             button.getScene().getWindow().hide();
                             updateTable();
+                            if (map) updateMap();
                         } else {
                             textField2.setText("");
                             textField2.setPromptText(MyApplication.getAppLanguage().getString("too_old"));
@@ -743,7 +757,7 @@ public class TableController {
         gridPane.add(button, 2, 7);
 
         Scene scene = new Scene(gridPane, 700, 270);
-        scene.getStylesheets().add("/css/table.css");
+        scene.getStylesheets().add("/css/style.css");
         button.getStyleClass().add("submit-button");
         primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.setScene(scene);
@@ -770,7 +784,7 @@ public class TableController {
         gridPane.add(submit, 1, 1);
 
         Scene scene = new Scene(gridPane, 300, 80);
-        scene.getStylesheets().add("/css/table.css");
+        scene.getStylesheets().add("/css/style.css");
         submit.getStyleClass().add("submit-button");
         primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.setScene(scene);
@@ -796,7 +810,7 @@ public class TableController {
         stage.setTitle("Dragons collection manager");
         try {
             Scene scene = new Scene(new FXMLLoader(getClass().getResource("/fxml/authentication.fxml")).load(), 1024, 720);
-            scene.getStylesheets().add("/css/table.css");
+            scene.getStylesheets().add("/css/style.css");
             stage.setScene(scene);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -810,6 +824,7 @@ public class TableController {
         if (result.contains(":")) {
             window.hide();
             updateTable();
+            if (map) updateMap();
             showAlert("Result", result);
         } else {
             textField.setText("");
@@ -825,5 +840,58 @@ public class TableController {
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.setStyle("-fx-background-color: #F9F5D2");
         alert.showAndWait();
+    }
+
+    private final HashMap<String, javafx.scene.paint.Color> users = new HashMap<>();
+
+    private void getUsersAndColors() {
+        try {
+            ResultSet resultSet = DatabaseConnection.executePreparedStatement("select * from users");
+            while (resultSet.next()) {
+                users.put(resultSet.getString(1), javafx.scene.paint.Color.color(Math.random(), Math.random(), Math.random()));
+            }
+        } catch (SQLException ignored) {}
+    }
+
+    private void setMapPane() {
+        DragonsCollection.getDragons().stream().sorted().forEachOrdered(dragon -> {
+            if (dragon.getX() < 464.0 && dragon.getX() > -464.0 && dragon.getY() < 285.5 && dragon.getY() > -285.5) {
+                ImageView image = new ImageView("/assets/dragon.png");
+                image.setRotate(180);
+                image.setFitHeight(20);
+                image.setFitWidth(20);
+                image.setX(dragon.getX() + 464.0 - 10.0);
+                image.setY(dragon.getY() + 285.5 - 10.0);
+                Circle circle = new Circle(dragon.getX() + 464, dragon.getY() + 285.5, 12, users.get(dragon.getCreator()));
+                image.setOpacity(0);
+                circle.setOpacity(0);
+                mapPane.getChildren().add(circle);
+                mapPane.getChildren().add(image);
+                Thread animation = new Thread(new Runnable() {
+                    double imageOpacity = 0; // to 1
+                    double circleOpacity = 0; // to 0.5
+                    @Override
+                    public void run() {
+                        while (imageOpacity < 1) {
+                            circleOpacity += 0.005;
+                            circle.setOpacity(circleOpacity);
+                            imageOpacity += 0.01;
+                            image.setOpacity(imageOpacity);
+                            try {
+                                Thread.sleep(1);
+                            } catch (InterruptedException ignored) {}
+                        }
+                    }
+                });
+                animation.start();
+                image.setOnMouseClicked(event -> showAlert("Dragon", dragon.toString()));
+                circle.setOnMouseClicked(event -> showAlert("Dragon", dragon.toString()));
+            }
+        });
+    }
+
+    private void updateMap() {
+        mapPane.getChildren().clear();
+        setMapPane();
     }
 }

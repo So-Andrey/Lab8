@@ -5,9 +5,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" style="-fx-background-color: #F9F5D2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MapController">
+<?import javafx.scene.layout.Pane?>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" style="-fx-background-color: #F9F5D2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MapController">
     <children>
-        <AnchorPane layoutX="-2.0" layoutY="-2.0" prefHeight="61.0" prefWidth="1028.0" style="-fx-background-color: #EFC88B;">
+        <AnchorPane layoutX="-2.0" layoutY="-2.0" prefHeight="61.0" prefWidth="1026.0" style="-fx-background-color: #EFC88B;">
             <children>
                 <Button fx:id="tableButton" layoutX="12.0" layoutY="14.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="78.0" style="-fx-background-color: #F3CBC5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="TABLE">
                     <font>
@@ -19,5 +20,6 @@
                 </Button>
             </children>
         </AnchorPane>
+      <Pane fx:id="mapPane" layoutX="36.0" layoutY="127.0" prefHeight="557.0" prefWidth="952.0" style="-fx-background-color: #F3CBC5; -fx-border-color: #FF8C4C; -fx-background-radius: 10; -fx-border-radius: 10;" />
     </children>
-</AnchorPane>
+</Pane>

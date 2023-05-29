@@ -34,8 +34,6 @@ public class AddIfMinCommand implements Command {
         } else {
             if (DragonsCollection.getDragons().stream().noneMatch((dragon1 -> dragon.getAge() >= dragon1.getAge()))) {
                 DragonAdder.dragonToAdderToDB(dragon);
-            } else {
-                System.out.println("Новый элемент не добавлен, так как возраст заданного дракона слишком большой");
             }
         }
     }

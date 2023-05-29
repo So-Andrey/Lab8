@@ -62,3 +62,7 @@
 .table-view > .virtual-flow > .corner{
     -fx-background-color: #F3CBC5;
 }
+
+.context-menu {
+    -fx-background-color: #F3CBC5;
+}

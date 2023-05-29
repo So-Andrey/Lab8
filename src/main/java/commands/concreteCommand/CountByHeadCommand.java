@@ -4,12 +4,13 @@ import allForDragons.DragonsCollection;
 import commands.Command;
 import commands.CommandArgsChecker;
 import commands.Invoker;
+import java.util.LinkedList;
 
 public class CountByHeadCommand implements Command {
     /** Метод, выводящий количество драконов с заданным количеством глаз
      * @param eyesCount заданное количество глаз */
-    private void getCountOfDragons(double eyesCount) {
-        System.out.println("Количество драконов с заданным количеством глаз: " + DragonsCollection.getDragons().stream().filter(dragon -> dragon.getHead().getEyesCount() == eyesCount).count());
+    private String getCountOfDragons(double eyesCount) {
+        return "The number of dragons with a given number of eyes: " + DragonsCollection.getDragons().stream().filter(dragon -> dragon.getHead().getEyesCount() == eyesCount).count();
     }
     /** Метод, выводящий количество элементов, значение поля head которых равно заданному с помощью getCountOfDragons
      * @see CountByHeadCommand#getCountOfDragons(double)
@@ -18,14 +19,24 @@ public class CountByHeadCommand implements Command {
     public void execute() {
         CommandArgsChecker.commandArgsChecker(1);
         if (DragonsCollection.getDragons().isEmpty()) {
-            System.out.println("Коллекция пуста");
+            result.add("The number of dragons with a given number of eyes: 0");
         } else {
             try {
-                getCountOfDragons(Double.parseDouble(Invoker.getSplit()[1]));
+                result.add(getCountOfDragons(Double.parseDouble(Invoker.getSplit()[1])));
             } catch (NumberFormatException e) {
                 throw new NullPointerException();
             }
         }
+    }
+    private static final LinkedList<String> result = new LinkedList<>();
+    public static LinkedList<String> getResult() {
+        return result;
+    }
+    public static void resetResult() {
+        result.clear();
+    }
+    public static boolean isResultEmpty() {
+        return result.isEmpty();
     }
     @Override
     public String description() {

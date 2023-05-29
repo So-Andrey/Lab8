@@ -16,17 +16,9 @@ public class RemoveByIdCommand implements Command {
      * @see DragonsCollection#updateFromDB() */
     private void removerById(long id) {
         List<Dragon> matchedDragon = DragonsCollection.getDragons().stream().filter((dragon -> dragon.getId() == id)).toList();
-        if (matchedDragon.isEmpty()) {
-            System.out.println("Такого дракона не существует");
-        } else {
-            int beforeSize = DragonsCollection.getDragons().size();
+        if (!matchedDragon.isEmpty()) {
             DatabaseConnection.executeStatement("delete from dragons where id = " + matchedDragon.get(0).getId() + " and creator = '" + UserAuthentication.getCurrentUser() + "'");
             DragonsCollection.updateFromDB();
-            if (beforeSize == DragonsCollection.getDragons().size()) {
-                System.out.println("Вы не можете удалить этого дракона, так как он создан другим пользователем");
-            } else {
-                System.out.println("Дракон успешно удалён");
-            }
         }
     }
     /** Выполняет команду с помощью removerById

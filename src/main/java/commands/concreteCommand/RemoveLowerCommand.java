@@ -15,13 +15,9 @@ public class RemoveLowerCommand implements Command {
      * @see DatabaseConnection#executeStatement(String) */
     private void removerLower(Dragon thisDragon) {
         List<Dragon> lowerDragons = DragonsCollection.getDragons().stream().filter(dragon -> dragon.getAge() < thisDragon.getAge()).toList();
-        if (lowerDragons.isEmpty()) {
-            System.out.println("Драконов младше заданного не существует");
-        } else {
-            int beforeSize = DragonsCollection.getDragons().size();
+        if (!lowerDragons.isEmpty()) {
             lowerDragons.forEach(dragon -> DatabaseConnection.executeStatement("delete from dragons where id = " + dragon.getId() + " and creator = '" + UserAuthentication.getCurrentUser() + "'"));
             DragonsCollection.updateFromDB();
-            System.out.println("Количество удалённых драконов: " + (beforeSize - DragonsCollection.getDragons().size()) + "\nP.S. (Вы можете удалять только тех драконов, создателем которых являетесь)");
         }
     }
     /** Метод, находящий заданного дракона в коллекции и вызывающий метод removerLower
@@ -32,8 +28,7 @@ public class RemoveLowerCommand implements Command {
         CommandArgsChecker.commandArgsChecker(1);
         try {
             List<Dragon> matchedDragons = DragonsCollection.getDragons().stream().filter(dragon -> dragon.getId() == Long.parseLong(Invoker.getSplit()[1])).toList();
-            if (matchedDragons.isEmpty()) System.out.println("Заданного дракона не существует");
-            else removerLower(matchedDragons.get(0));
+            if (!matchedDragons.isEmpty()) removerLower(matchedDragons.get(0));
         } catch (NumberFormatException ex) {
             throw new NullPointerException();
         }

@@ -25,7 +25,6 @@ public class ExecuteScriptCommand implements Command {
                 } else {
                     recursionChecker = 0;
                     recursion = true;
-                    System.out.println("Рекурсия!!!");
                     result = "Recursion!!!";
                 }
             } catch (NullPointerException ignored) {}
@@ -71,12 +70,8 @@ public class ExecuteScriptCommand implements Command {
             if (new File(file).exists() & new File(file).canRead()) {
                 recursion = false;
                 executorFromFile(file);
-            } else {
-                System.out.println("Нет доступа к файлу");
             }
-        } catch (FileNotFoundException fileNotFoundException) {
-            System.out.println("Файл не найден");
-        }
+        } catch (FileNotFoundException ignored) {}
     }
     public String executeFromGUI(String file) {
         try {

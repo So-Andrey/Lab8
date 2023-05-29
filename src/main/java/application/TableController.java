@@ -16,9 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.ResourceBundle;
+import java.util.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -447,10 +445,14 @@ public class TableController {
                 showAlert("Result", result);
             } else {
                 updateTable();
+                if (!CountByHeadCommand.isResultEmpty()) {
+                    final String[] countByHeadResultString = {""};
+                    CountByHeadCommand.getResult().forEach(result1 -> countByHeadResultString[0] += result1 + "\n");
+                    CountByHeadCommand.resetResult();
+                    showAlert("Count by head result", countByHeadResultString[0]);
+                }
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        } catch (Exception ignored) {}
     }
 
     private void setRemoveButton(String type) {
@@ -722,9 +724,7 @@ public class TableController {
                         }
                     }
                 }
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+            } catch (Exception ignored) {}
         });
         gridPane.add(button, 2, 7);
 

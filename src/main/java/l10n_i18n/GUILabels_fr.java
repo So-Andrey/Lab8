@@ -74,7 +74,16 @@ public class GUILabels_fr extends ListResourceBundle {
             {"map", "CARTE"},
             {"log_out", "Déconnexion"},
             {"user", "UTILISATEUR ACTUEL"},
-            {"table", "TABLEAU"}
+            {"table", "TABLEAU"},
+            {"login", "Nom d'utilisateur"},
+            {"password", "Mot de passe"},
+            {"reg","INSCRIPTION"},
+            {"auth", "L'AUTORISATION"},
+            {"already_reg", "Déjà inscrit? Se connecter"},
+            {"become", "Vous n'avez pas de compte? S'inscrire"},
+            {"log_in", "Connexion"},
+            {"login_exists", "Le login existe déjà"}
+
     };
 
     public Object[][] getContents() {

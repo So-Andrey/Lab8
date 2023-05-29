@@ -74,7 +74,15 @@ public class GUILabels_en extends ListResourceBundle {
             {"map", "MAP"},
             {"log_out", "Log Out"},
             {"user", "CURRENT USER"},
-            {"table", "TABLE"}
+            {"table", "TABLE"},
+            {"login", "Login"},
+            {"password", "Password"},
+            {"reg","REGISTRATION"},
+            {"auth", "AUTHORIZATION"},
+            {"already_reg", "Already registered? Log In"},
+            {"become", "Don't have an account? Sign Up"},
+            {"log_in", "Log In"},
+            {"login_exists", "Login already exists"}
 
 
     };

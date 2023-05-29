@@ -13,7 +13,9 @@ public class MyApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         stage.setTitle("Dragons collection manager");
-        stage.setScene(new Scene(new FXMLLoader(getClass().getResource("/fxml/authentication.fxml")).load(), 1024, 720));
+        Scene scene = new Scene(new FXMLLoader(getClass().getResource("/fxml/authentication.fxml")).load(), 1024, 720);
+        scene.getStylesheets().add("/css/table.css");
+        stage.setScene(scene);
         stage.setResizable(false);
         stage.setMaximized(false);
         stage.show();

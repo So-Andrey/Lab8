@@ -75,7 +75,15 @@ public class GUILabels_tr extends ListResourceBundle {
             {"map", "HARITA"},
             {"log_out", "Oturumu Kapat"},
             {"user", "GÜNCEL KULLANICI"},
-            {"table", "TABLO"}
+            {"table", "TABLO"},
+            {"login", "Giriş"},
+            {"password", "Şifre"},
+            {"reg","KAYIT"},
+            {"auth", "YETKİLENDİRME"},
+            {"already_reg", "Zaten kayıtlı mısınız? Giriş Yapın"},
+            {"become", "Hesabınız yok mu? Kaydolun"},
+            {"log_in", "Giriş Yap"},
+            {"login_exists", "Giriş zaten mevcut"}
     };
 
     public Object[][] getContents() {

@@ -795,7 +795,9 @@ public class TableController {
         Stage stage = new Stage();
         stage.setTitle("Dragons collection manager");
         try {
-            stage.setScene(new Scene(new FXMLLoader(getClass().getResource("/fxml/authentication.fxml")).load(), 1024, 720));
+            Scene scene = new Scene(new FXMLLoader(getClass().getResource("/fxml/authentication.fxml")).load(), 1024, 720);
+            scene.getStylesheets().add("/css/table.css");
+            stage.setScene(scene);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

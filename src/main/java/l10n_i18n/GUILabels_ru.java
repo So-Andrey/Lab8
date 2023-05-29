@@ -74,7 +74,15 @@ public class GUILabels_ru extends ListResourceBundle {
             {"map", "КАРТА"},
             {"log_out", "Выйти"},
             {"user", "ТЕКУЩИЙ ПОЛЬЗОВАТЕЛЬ"},
-            {"table", "ТАБЛИЦА"}
+            {"table", "ТАБЛИЦА"},
+            {"login", "Логин"},
+            {"password", "Пароль"},
+            {"reg","РЕГИСТРАЦИЯ"},
+            {"auth", "АВТОРИЗАЦИЯ"},
+            {"already_reg", "Уже зарегистрированы? Войти"},
+            {"become", "Нет аккаунта? Зарегистрироваться"},
+            {"log_in", "Войти"},
+            {"login_exists", "Существующий логин"}
     };
 
     public Object[][] getContents() {

@@ -7,9 +7,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import l10n_i18n.Language;
-
 import java.util.ResourceBundle;
 
 public class AuthenticationController {
@@ -111,6 +113,17 @@ public class AuthenticationController {
             logInButton.setText(MyApplication.getAppLanguage().getString("log_in"));
             becomeAMemberButton.setText(MyApplication.getAppLanguage().getString("become"));
         }
+        if (MyApplication.getAppLanguage().equals(Language.en)) {
+            label.setFont(MyApplication.appFont(26));
+        } else {
+            label.setFont(new Font("System", 35));
+        }
+    }
+
+    @FXML
+    void memButton() {
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media(getClass().getResource("/assets/goofy_ahh.mp3").toString()));
+        mediaPlayer.play();
     }
 
     private void updateLanguage(ResourceBundle language) {
@@ -119,4 +132,5 @@ public class AuthenticationController {
             setLanguage();
         }
     }
+
 }

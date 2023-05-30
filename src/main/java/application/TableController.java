@@ -26,6 +26,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -392,11 +393,38 @@ public class TableController {
         infoButton.setText(MyApplication.getAppLanguage().getString("info"));
         helpButton.setText(MyApplication.getAppLanguage().getString("help_button"));
         logOutButton.setText(MyApplication.getAppLanguage().getString("log_out"));
-        label.setText(MyApplication.getAppLanguage().getString("user") + ":");
+        label.setText(MyApplication.getAppLanguage().getString("user"));
         if (map) {
             mapButton.setText(MyApplication.getAppLanguage().getString("table"));
         } else {
             mapButton.setText(MyApplication.getAppLanguage().getString("map"));
+        }
+        if (MyApplication.getAppLanguage().equals(Language.en)) {
+            addButton.setFont(MyApplication.appFont(16));
+            removeMenuButton.setFont(MyApplication.appFont(16));
+            removeByIdButton.setFont(MyApplication.appFont(16));
+            removeLowerButton.setFont(MyApplication.appFont(16));
+            removeGreaterButton.setFont(MyApplication.appFont(16));
+            clearButton.setFont(MyApplication.appFont(16));
+            executeScriptButton.setFont(MyApplication.appFont(16));
+            countByHeadButton.setFont(MyApplication.appFont(16));
+            infoButton.setFont(MyApplication.appFont(16));
+            helpButton.setFont(MyApplication.appFont(16));
+            label.setFont(MyApplication.appFont(16));
+            mapButton.setFont(MyApplication.appFont(16));
+        } else {
+            addButton.setFont(new Font("System", 17));
+            removeMenuButton.setFont(new Font("System", 17));
+            removeByIdButton.setFont(new Font("System", 17));
+            removeLowerButton.setFont(new Font("System", 17));
+            removeGreaterButton.setFont(new Font("System", 17));
+            clearButton.setFont(new Font("System", 17));
+            executeScriptButton.setFont(new Font("System", 17));
+            countByHeadButton.setFont(new Font("System", 17));
+            infoButton.setFont(new Font("System", 17));
+            helpButton.setFont(new Font("System", 17));
+            label.setFont(new Font("System", 17));
+            mapButton.setFont(new Font("System", 17));
         }
     }
 
@@ -862,29 +890,11 @@ public class TableController {
                 image.setFitWidth(20);
                 image.setX(dragon.getX() + 464.0 - 10.0);
                 image.setY(dragon.getY() + 285.5 - 10.0);
+                image.setOpacity(1);
+                image.setMouseTransparent(true);
                 Circle circle = new Circle(dragon.getX() + 464, dragon.getY() + 285.5, 12, users.get(dragon.getCreator()));
-                image.setOpacity(0);
-                circle.setOpacity(0);
-                mapPane.getChildren().add(circle);
-                mapPane.getChildren().add(image);
-                Thread animation = new Thread(new Runnable() {
-                    double imageOpacity = 0; // to 1
-                    double circleOpacity = 0; // to 0.5
-                    @Override
-                    public void run() {
-                        while (imageOpacity < 1) {
-                            circleOpacity += 0.005;
-                            circle.setOpacity(circleOpacity);
-                            imageOpacity += 0.01;
-                            image.setOpacity(imageOpacity);
-                            try {
-                                Thread.sleep(1);
-                            } catch (InterruptedException ignored) {}
-                        }
-                    }
-                });
-                animation.start();
-                image.setOnMouseClicked(event -> showAlert("Dragon", dragon.toString()));
+                circle.setOpacity(0.5);
+                mapPane.getChildren().addAll(circle, image);
                 circle.setOnMouseClicked(event -> showAlert("Dragon", dragon.toString()));
             }
         });
@@ -894,4 +904,22 @@ public class TableController {
         mapPane.getChildren().clear();
         setMapPane();
     }
+
+    /*Thread animation = new Thread(new Runnable() {
+        double imageOpacity = 0; // to 1
+        double circleOpacity = 0; // to 0.5
+        @Override
+        public void run() {
+            while (imageOpacity < 1) {
+                circleOpacity += 0.005;
+                circle.setOpacity(circleOpacity);
+                imageOpacity += 0.01;
+                image.setOpacity(imageOpacity);
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException ignored) {}
+            }
+        }
+    });
+                animation.start();*/
 }

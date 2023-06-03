@@ -2,12 +2,14 @@ package commands.concreteCommand;
 
 import allForDragons.*;
 import application.MyApplication;
+import application.TableController;
 import commands.Command;
 import commands.CommandArgsChecker;
 import commands.Invoker;
 import database.DatabaseConnection;
 import database.UserAuthentication;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RemoveLowerCommand implements Command {
     /** Метод, удаляющий из коллекции всех драконов младше заданного
@@ -18,6 +20,7 @@ public class RemoveLowerCommand implements Command {
         List<Dragon> lowerDragons = DragonsCollection.getDragons().stream().filter(dragon -> dragon.getAge() < thisDragon.getAge()).toList();
         if (!lowerDragons.isEmpty()) {
             lowerDragons.forEach(dragon -> DatabaseConnection.executeStatement("delete from dragons where id = " + dragon.getId() + " and creator = '" + UserAuthentication.getCurrentUser() + "'"));
+            TableController.addToDisappear(lowerDragons.stream().filter(dragon -> dragon.getCreator().equals(UserAuthentication.getCurrentUser())).collect(Collectors.toSet()));
             DragonsCollection.updateFromDB();
         }
     }
@@ -48,6 +51,7 @@ public class RemoveLowerCommand implements Command {
                     int beforeSize = DragonsCollection.getDragons().size();
                     lowerDragons.forEach(dragon -> DatabaseConnection.executeStatement("delete from dragons where id = " + dragon.getId() + " and creator = '" + UserAuthentication.getCurrentUser() + "'"));
                     DragonsCollection.updateFromDB();
+                    TableController.addToDisappear(lowerDragons.stream().filter(dragon -> dragon.getCreator().equals(UserAuthentication.getCurrentUser())).collect(Collectors.toSet()));
                     return MyApplication.getAppLanguage().getString("amount") + ": " + (beforeSize - DragonsCollection.getDragons().size()) + "\n" + MyApplication.getAppLanguage().getString("delete_ps");
                 }
             }

@@ -12,6 +12,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Point3D;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -21,10 +22,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
@@ -38,6 +38,14 @@ import l10n_i18n.Language;
 
 public class TableController {
 
+    @FXML
+    public TextField xTextField;
+
+    @FXML
+    public TextField yTextField;
+
+    @FXML
+    public Button setCenterButton;
     @FXML
     private Pane mapPane;
 
@@ -351,6 +359,7 @@ public class TableController {
         ruLangButton.setOnAction(event -> updateLanguage(Language.ru));
         frLangButton.setOnAction(event -> updateLanguage(Language.fr));
         trLangButton.setOnAction(event -> updateLanguage(Language.tr));
+        setCenterButton.setOnAction(event -> setSetCenterButton());
 
     }
 
@@ -465,15 +474,20 @@ public class TableController {
             table.setVisible(true);
             searchTextField.setVisible(true);
             searchMenuButton.setVisible(true);
+            xTextField.setVisible(false);
+            yTextField.setVisible(false);
+            setCenterButton.setVisible(false);
             map = false;
         } else {
-            users.clear();
-            getUsersAndColors();
+            clearAnimation();
             updateMap();
             mapButton.setText(MyApplication.getAppLanguage().getString("table"));
             table.setVisible(false);
             searchTextField.setVisible(false);
             searchMenuButton.setVisible(false);
+            xTextField.setVisible(true);
+            yTextField.setVisible(true);
+            setCenterButton.setVisible(true);
             mapPane.setVisible(true);
             map = true;
         }
@@ -760,20 +774,23 @@ public class TableController {
                 if (!checkBox.isSelected()) {
                     DragonAdder.dragonToAdderToDB(dragon);
                     button.getScene().getWindow().hide();
-                    updateTable();
+                    toAppearDragons.add(dragon);
                     if (map) updateMap();
+                    updateTable();
                 } else {
                     if (DragonsCollection.getDragons().isEmpty()) {
                         DragonAdder.dragonToAdderToDB(dragon);
                         button.getScene().getWindow().hide();
-                        updateTable();
+                        toAppearDragons.add(dragon);
                         if (map) updateMap();
+                        updateTable();
                     } else {
                         if (DragonsCollection.getDragons().stream().noneMatch((dragon1 -> dragon.getAge() >= dragon1.getAge()))) {
                             DragonAdder.dragonToAdderToDB(dragon);
                             button.getScene().getWindow().hide();
-                            updateTable();
+                            toAppearDragons.add(dragon);
                             if (map) updateMap();
+                            updateTable();
                         } else {
                             textField2.setText("");
                             textField2.setPromptText(MyApplication.getAppLanguage().getString("too_old"));
@@ -834,6 +851,7 @@ public class TableController {
         logOutButton.getScene().getWindow().hide();
         DragonsCollection.getDragons().clear();
         UserAuthentication.logOut();
+        users.clear();
         Stage stage = new Stage();
         stage.setTitle("Dragons collection manager");
         try {
@@ -867,35 +885,49 @@ public class TableController {
         alert.setContentText(text);
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.setStyle("-fx-background-color: #F9F5D2");
+        Button ok = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+        ok.setStyle("-fx-background-color: #F3CBC5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FF8C4C; -fx-cursor: HAND;");
         alert.showAndWait();
     }
 
-    private final HashMap<String, javafx.scene.paint.Color> users = new HashMap<>();
+    private static final HashMap<String, javafx.scene.paint.Color> users = new HashMap<>();
 
-    private void getUsersAndColors() {
+    protected static void getUsersAndColors() {
         try {
             ResultSet resultSet = DatabaseConnection.executePreparedStatement("select * from users");
             while (resultSet.next()) {
-                users.put(resultSet.getString(1), javafx.scene.paint.Color.color(Math.random(), Math.random(), Math.random()));
+                users.put(resultSet.getString(1), javafx.scene.paint.Color.color(1 - Math.random() * 0.8, 1 - Math.random() * 0.8, 1 - Math.random() * 0.8));
             }
         } catch (SQLException ignored) {}
     }
 
+    private double X_CENTER = 0.0;
+    private double Y_CENTER = 0.0;
+
     private void setMapPane() {
-        DragonsCollection.getDragons().stream().sorted().forEachOrdered(dragon -> {
-            if (dragon.getX() < 464.0 && dragon.getX() > -464.0 && dragon.getY() < 285.5 && dragon.getY() > -285.5) {
+        DragonsCollection.getDragons().forEach(dragon -> {
+            double x = dragon.getX() + 464.0 - X_CENTER;
+            double y = dragon.getY() + 285.5 - Y_CENTER;
+            if (dragon.getX() <= 450.0 + X_CENTER && dragon.getX() >= -450.0 + X_CENTER && dragon.getY() <= 270.0 + Y_CENTER && dragon.getY() >= -270.0 + Y_CENTER) {
                 ImageView image = new ImageView("/assets/dragon.png");
                 image.setRotate(180);
                 image.setFitHeight(20);
                 image.setFitWidth(20);
-                image.setX(dragon.getX() + 464.0 - 10.0);
-                image.setY(dragon.getY() + 285.5 - 10.0);
+                image.setX(x - 10.0);
+                image.setY(y - 10.0);
                 image.setOpacity(1);
                 image.setMouseTransparent(true);
-                Circle circle = new Circle(dragon.getX() + 464, dragon.getY() + 285.5, 12, users.get(dragon.getCreator()));
+                Circle circle = new Circle(x, y, 12, users.get(dragon.getCreator()));
                 circle.setOpacity(0.5);
                 mapPane.getChildren().addAll(circle, image);
-                circle.setOnMouseClicked(event -> showAlert("Dragon", dragon.toString()));
+                Label label1 = new Label("Dragon " + dragon.getId() + " by " + dragon.getCreator());
+                label1.setRotationAxis(new Point3D(1,0,0));
+                label1.setRotate(180);
+                label1.setTranslateX(x - 50.0);
+                label1.setTranslateY(y + 15.0);
+                circle.setOnMouseEntered(event -> mapPane.getChildren().add(label1));
+                circle.setOnMouseExited(event -> mapPane.getChildren().remove(label1));
+                circle.setOnMouseClicked(event -> showAlert("Dragon " + dragon.getId() + " by " + dragon.getCreator(), dragon.toString()));
             }
         });
     }
@@ -903,23 +935,72 @@ public class TableController {
     private void updateMap() {
         mapPane.getChildren().clear();
         setMapPane();
+        playAnimation(toAppearDragons, true);
+        playAnimation(toDisappearDragons, false);
     }
 
-    /*Thread animation = new Thread(new Runnable() {
-        double imageOpacity = 0; // to 1
-        double circleOpacity = 0; // to 0.5
-        @Override
-        public void run() {
-            while (imageOpacity < 1) {
-                circleOpacity += 0.005;
-                circle.setOpacity(circleOpacity);
-                imageOpacity += 0.01;
-                image.setOpacity(imageOpacity);
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException ignored) {}
+    private static final Collection<Dragon> toAppearDragons = new HashSet<>();
+    private static final Collection<Dragon> toDisappearDragons = new HashSet<>();
+    public static void addToAppear(Collection<Dragon> dragons) {
+        toAppearDragons.addAll(dragons);
+    }
+    public static void addToDisappear(Collection<Dragon> dragons) {
+        toDisappearDragons.addAll(dragons);
+    }
+
+    private void clearAnimation() {
+        toAppearDragons.clear();
+        toDisappearDragons.clear();
+    }
+
+    private void playAnimation(Collection<Dragon> dragons, boolean appear) {
+        dragons.forEach(dragon -> {
+            double x = dragon.getX() + 464.0 - X_CENTER;
+            double y = dragon.getY() + 285.5 - Y_CENTER;
+            if (dragon.getX() <= 450.0 + X_CENTER && dragon.getX() >= -450.0 + X_CENTER && dragon.getY() <= 270.0 + Y_CENTER && dragon.getY() >= -270.0 + Y_CENTER) {
+                ImageView imageView;
+                if (appear) {
+                    imageView = new ImageView(new Image(getClass().getResource("/assets/appear.gif").toString()));
+                    imageView.setFitWidth(64);
+                    imageView.setFitHeight(36);
+                    imageView.setX(x - 30.0);
+                    imageView.setY(y - 20.0);
+                } else {
+                    imageView = new ImageView(new Image(getClass().getResource("/assets/disappear.gif").toString()));
+                    imageView.setFitWidth(76.8);
+                    imageView.setFitHeight(43.2);
+                    imageView.setX(x - 40.0);
+                    imageView.setY(y - 20.0);
+                }
+                imageView.setRotationAxis(new Point3D(1,0,0));
+                imageView.setRotate(180);
+                mapPane.getChildren().add(imageView);
             }
+        });
+        dragons.clear();
+    }
+
+    private void setSetCenterButton() {
+        try {
+            double x = Double.parseDouble(xTextField.getText());
+            double y = Double.parseDouble(yTextField.getText());
+            if (x > 160.0 || x < Long.MIN_VALUE + 450.0 || y > 3.4028235e+38f - 270.0 || y < - 3.4028235e+38f + 270.0) {
+                xTextField.setText("");
+                yTextField.setText("");
+                showAlert("Error", """
+                                            -9223372036854775358 <= X <= 160
+                                            -3.40282346638528860e+38 + 270 <= Y <= 3.40282346638528860e+38 - 270
+                                            """);
+            } else {
+                X_CENTER = x;
+                Y_CENTER = y;
+                updateMap();
+            }
+        } catch (NumberFormatException numberFormatException) {
+            xTextField.setText("");
+            yTextField.setText("");
+            showAlert("Error", MyApplication.getAppLanguage().getString("invalid_inp"));
         }
-    });
-                animation.start();*/
+    }
+
 }

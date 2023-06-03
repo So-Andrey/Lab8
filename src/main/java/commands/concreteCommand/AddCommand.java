@@ -1,10 +1,12 @@
 package commands.concreteCommand;
 
+import application.TableController;
 import commands.Command;
 import allForDragons.*;
 import commands.CommandArgsChecker;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.Set;
 
 public class AddCommand implements Command {
     /**Метод, добавляющий в коллекцию нового дракона
@@ -21,7 +23,9 @@ public class AddCommand implements Command {
      * @see DragonAdder#dragonToAdderToDB(Dragon) */
     protected static void adderFromFile(Scanner scanner) {
         try {
-            DragonAdder.dragonToAdderToDB(DragonAdder.dragonFromFileAdder(scanner));
+            Dragon dragon = DragonAdder.dragonFromFileAdder(scanner);
+            TableController.addToAppear(Set.of(dragon));
+            DragonAdder.dragonToAdderToDB(dragon);
         } catch (InputMismatchException ignored) {}
     }
     @Override

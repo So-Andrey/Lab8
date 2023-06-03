@@ -277,5 +277,20 @@
          <cursor>
             <Cursor fx:constant="CROSSHAIR" />
          </cursor></Pane>
+      <TextField layoutX="292.0" layoutY="688.0" prefHeight="28.0" prefWidth="135.0" promptText="X0" style="-fx-background-color: #FCDDD8; -fx-background-radius: 10; -fx-border-color: #FF8C4C; -fx-border-radius: 10;" visible="false" fx:id="xTextField">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </TextField>
+      <TextField fx:id="yTextField" layoutX="440.0" layoutY="688.0" prefHeight="28.0" prefWidth="135.0" promptText="Y0" style="-fx-background-color: #FCDDD8; -fx-background-radius: 10; -fx-border-color: #FF8C4C; -fx-border-radius: 10;" visible="false">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </TextField>
+      <Button fx:id="setCenterButton" layoutX="588.0" layoutY="688.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="135.0" style="-fx-background-color: #F3CBC5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FF8C4C;" text="Set" visible="false">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>

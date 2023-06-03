@@ -3,12 +3,15 @@ package commands.concreteCommand;
 import allForDragons.Dragon;
 import allForDragons.DragonsCollection;
 import application.MyApplication;
+import application.TableController;
 import commands.Command;
 import commands.CommandArgsChecker;
 import commands.Invoker;
 import database.DatabaseConnection;
 import database.UserAuthentication;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class RemoveByIdCommand implements Command {
     /** Метод, удаляющий дракона по значению id
@@ -20,6 +23,7 @@ public class RemoveByIdCommand implements Command {
         if (!matchedDragon.isEmpty()) {
             DatabaseConnection.executeStatement("delete from dragons where id = " + matchedDragon.get(0).getId() + " and creator = '" + UserAuthentication.getCurrentUser() + "'");
             DragonsCollection.updateFromDB();
+            TableController.addToDisappear(matchedDragon.stream().filter(dragon -> dragon.getCreator().equals(UserAuthentication.getCurrentUser())).collect(Collectors.toSet()));
         }
     }
     /** Выполняет команду с помощью removerById
@@ -47,6 +51,7 @@ public class RemoveByIdCommand implements Command {
                 if (beforeSize == DragonsCollection.getDragons().size()) {
                     return MyApplication.getAppLanguage().getString("not_your");
                 } else {
+                    TableController.addToDisappear(Set.of(matchedDragon.get(0)));
                     return null;
                 }
             }

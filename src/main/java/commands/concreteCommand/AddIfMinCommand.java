@@ -1,10 +1,12 @@
 package commands.concreteCommand;
 
 import allForDragons.*;
+import application.TableController;
 import commands.Command;
 import commands.CommandArgsChecker;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.Set;
 
 public class AddIfMinCommand implements Command {
     /**Метод, добавляющий в коллекцию нового дракона, если его возраст меньше имеющихся в коллекции
@@ -31,9 +33,11 @@ public class AddIfMinCommand implements Command {
     private static void ifMinAdder(Dragon dragon) {
         if (DragonsCollection.getDragons().isEmpty()) {
             DragonAdder.dragonToAdderToDB(dragon);
+            TableController.addToAppear(Set.of(dragon));
         } else {
             if (DragonsCollection.getDragons().stream().noneMatch((dragon1 -> dragon.getAge() >= dragon1.getAge()))) {
                 DragonAdder.dragonToAdderToDB(dragon);
+                TableController.addToAppear(Set.of(dragon));
             }
         }
     }

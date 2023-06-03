@@ -2,12 +2,14 @@ package commands.concreteCommand;
 
 import allForDragons.*;
 import application.MyApplication;
+import application.TableController;
 import commands.Command;
 import commands.CommandArgsChecker;
 import commands.Invoker;
 import database.DatabaseConnection;
 import database.UserAuthentication;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RemoveGreaterCommand implements Command {
     /** Метод, удаляющий из коллекции всех драконов старше заданного
@@ -18,6 +20,7 @@ public class RemoveGreaterCommand implements Command {
         List<Dragon> greaterDragons = DragonsCollection.getDragons().stream().filter(dragon -> dragon.getAge() > thisDragon.getAge()).toList();
         if (!greaterDragons.isEmpty()) {
             greaterDragons.forEach(dragon -> DatabaseConnection.executeStatement("delete from dragons where id = " + dragon.getId() + " and creator = '" + UserAuthentication.getCurrentUser() + "'"));
+            TableController.addToDisappear(greaterDragons.stream().filter(dragon -> dragon.getCreator().equals(UserAuthentication.getCurrentUser())).collect(Collectors.toSet()));
             DragonsCollection.updateFromDB();
         }
     }
@@ -41,13 +44,14 @@ public class RemoveGreaterCommand implements Command {
             if (matchedDragons.isEmpty()) {
                 return MyApplication.getAppLanguage().getString("no_dragon");
             } else {
-                List<Dragon> lowerDragons = DragonsCollection.getDragons().stream().filter(dragon -> dragon.getAge() > matchedDragons.get(0).getAge()).toList();
-                if (lowerDragons.isEmpty()) {
+                List<Dragon> greaterDragons = DragonsCollection.getDragons().stream().filter(dragon -> dragon.getAge() > matchedDragons.get(0).getAge()).toList();
+                if (greaterDragons.isEmpty()) {
                     return MyApplication.getAppLanguage().getString("no_greater");
                 } else {
                     int beforeSize = DragonsCollection.getDragons().size();
-                    lowerDragons.forEach(dragon -> DatabaseConnection.executeStatement("delete from dragons where id = " + dragon.getId() + " and creator = '" + UserAuthentication.getCurrentUser() + "'"));
+                    greaterDragons.forEach(dragon -> DatabaseConnection.executeStatement("delete from dragons where id = " + dragon.getId() + " and creator = '" + UserAuthentication.getCurrentUser() + "'"));
                     DragonsCollection.updateFromDB();
+                    TableController.addToDisappear(greaterDragons.stream().filter(dragon -> dragon.getCreator().equals(UserAuthentication.getCurrentUser())).collect(Collectors.toSet()));
                     return MyApplication.getAppLanguage().getString("amount") + ": " + (beforeSize - DragonsCollection.getDragons().size()) + "\n" + MyApplication.getAppLanguage().getString("delete_ps");
                 }
             }

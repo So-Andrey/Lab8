@@ -61,6 +61,10 @@ public class AuthenticationController {
         frLangButton.setOnAction(event -> updateLanguage(Language.fr));
         trLangButton.setOnAction(event -> updateLanguage(Language.tr));
         becomeAMemberButton.setOnAction(event -> {
+            loginField.setText("");
+            passwordField.setText("");
+            loginField.setPromptText(MyApplication.getAppLanguage().getString("login"));
+            passwordField.setPromptText(MyApplication.getAppLanguage().getString("password"));
             if (registration) {
                 label.setText(MyApplication.getAppLanguage().getString("auth"));
                 logInButton.setText(MyApplication.getAppLanguage().getString("log_in"));
@@ -74,6 +78,8 @@ public class AuthenticationController {
             }
         });
         logInButton.setOnAction(event -> {
+            loginField.setPromptText(MyApplication.getAppLanguage().getString("login"));
+            passwordField.setPromptText(MyApplication.getAppLanguage().getString("password"));
             if (registration) {
                 if (UserAuthentication.userRegistration(loginField.getText().trim(), passwordField.getText())) {
                     loginField.setText("");
@@ -92,6 +98,7 @@ public class AuthenticationController {
                     logInButton.getScene().getWindow().hide();
                     DragonsCollection.putDragonsFromDB();
                     MyApplication.openTableWindow();
+                    TableController.getUsersAndColors();
                 } else {
                     loginField.setText("");
                     passwordField.setText("");

@@ -24,7 +24,7 @@ public class DatabasePropertiesGetter {
     static {
         Properties properties = new Properties();
         try {
-            properties.load(new FileInputStream("/Users/a12/Documents/ITMO/Programming/JavaLabs/Sem2/GUI/src/main/resources/db.cfg")); // /home/studs/s368824/Lab7/db.cfg
+            properties.load(new FileInputStream(System.getProperty("user.dir") + System.getProperty("file.separator") + "db.cfg")); // /home/studs/s368824/Lab7/db.cfg
             url = properties.getProperty("url");
             user = properties.getProperty("user");
             password = properties.getProperty("password");

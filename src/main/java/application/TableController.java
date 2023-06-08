@@ -267,13 +267,7 @@ public class TableController {
                 table.refresh();
             }
         });
-        y.setCellValueFactory(dragonStringCellDataFeatures -> {
-            if (MyApplication.getAppLanguage().equals(Language.en)) {
-                return new SimpleStringProperty(dragonStringCellDataFeatures.getValue().getY() + "");
-            } else {
-                return new SimpleStringProperty((dragonStringCellDataFeatures.getValue().getY() + "").replace('.', ','));
-            }
-        });
+        y.setCellValueFactory(dragonStringCellDataFeatures -> new SimpleStringProperty((dragonStringCellDataFeatures.getValue().getY() + "").replace(".", MyApplication.getAppLanguage().getString("separator"))));
         y.setCellFactory(TextFieldTableCell.forTableColumn());
         y.setOnEditCommit(event -> {
             try {
@@ -335,13 +329,7 @@ public class TableController {
                 table.refresh();
             }
         });
-        eyesCount.setCellValueFactory(dragonStringCellDataFeatures -> {
-            if (MyApplication.getAppLanguage().equals(Language.en)) {
-                return new SimpleStringProperty(dragonStringCellDataFeatures.getValue().getHead().getEyesCount() + "");
-            } else {
-                return new SimpleStringProperty((dragonStringCellDataFeatures.getValue().getHead().getEyesCount() + "").replace('.', ','));
-            }
-        });
+        eyesCount.setCellValueFactory(dragonStringCellDataFeatures -> new SimpleStringProperty((dragonStringCellDataFeatures.getValue().getHead().getEyesCount() + "").replace(".", MyApplication.getAppLanguage().getString("separator"))));
         eyesCount.setCellFactory(TextFieldTableCell.forTableColumn());
         eyesCount.setOnEditCommit(event -> {
             try {

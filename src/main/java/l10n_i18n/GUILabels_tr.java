@@ -84,7 +84,8 @@ public class GUILabels_tr extends ListResourceBundle {
             {"become", "Hesabınız yok mu? Kaydolun"},
             {"log_in", "Giriş Yap"},
             {"login_exists", "Giriş zaten mevcut"},
-            {"date_format", "dd.MM.yyyy HH:mm:ss Z"}
+            {"date_format", "dd.MM.yyyy HH:mm:ss Z"},
+            {"separator", ","}
     };
 
     public Object[][] getContents() {

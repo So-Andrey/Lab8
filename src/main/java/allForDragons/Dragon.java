@@ -107,8 +107,8 @@ public class Dragon implements Comparable<Dragon>{
                 MyApplication.getAppLanguage().getString("type") + ": " + type + "\n" +
                 MyApplication.getAppLanguage().getString("color") + ": " + color + "\n" +
                 MyApplication.getAppLanguage().getString("character") + ": " + character + "\n" +
-                MyApplication.getAppLanguage().getString("eyes_count") + ": " + head.getEyesCount() + "\n" +
-                MyApplication.getAppLanguage().getString("coordinates") + ": (" + coordinates.getX() + "; " + coordinates.getY() + ")\n" +
+                MyApplication.getAppLanguage().getString("eyes_count") + ": " + (head.getEyesCount() + "").replace(".", MyApplication.getAppLanguage().getString("separator")) + "\n" +
+                MyApplication.getAppLanguage().getString("coordinates") + ": (" + coordinates.getX() + "; " + (coordinates.getY() + "").replace(".", MyApplication.getAppLanguage().getString("separator")) + ")\n" +
                 MyApplication.getAppLanguage().getString("creator") + ": " + creator + "\n" +
                 MyApplication.getAppLanguage().getString("creation_date") + ": " + getCreationDate();
     }

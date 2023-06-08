@@ -82,7 +82,8 @@ public class GUILabels_fr extends ListResourceBundle {
             {"already_reg", "Déjà inscrit? Se connecter"},
             {"become", "Vous n'avez pas de compte? S'inscrire"},
             {"log_in", "Connexion"},
-            {"login_exists", "Le login existe déjà"}
+            {"login_exists", "Le login existe déjà"},
+            {"date_format", "dd.MM.yyyy HH:mm:ss Z"}
 
     };
 

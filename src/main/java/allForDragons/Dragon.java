@@ -88,7 +88,7 @@ public class Dragon implements Comparable<Dragon>{
         return creationDate.getTime();
     }
     public String getCreationDate() {
-        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z").format(creationDate);
+        return new SimpleDateFormat(MyApplication.getAppLanguage().getString("date_format")).format(creationDate);
     }
     public DragonHead getHead() {
         return head;
@@ -110,7 +110,7 @@ public class Dragon implements Comparable<Dragon>{
                 MyApplication.getAppLanguage().getString("eyes_count") + ": " + head.getEyesCount() + "\n" +
                 MyApplication.getAppLanguage().getString("coordinates") + ": (" + coordinates.getX() + "; " + coordinates.getY() + ")\n" +
                 MyApplication.getAppLanguage().getString("creator") + ": " + creator + "\n" +
-                MyApplication.getAppLanguage().getString("creation_date") + ": " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z").format(creationDate);
+                MyApplication.getAppLanguage().getString("creation_date") + ": " + getCreationDate();
     }
     /** Переопределение метода compareTo для сравнения драконов (по возрасту) */
     @Override

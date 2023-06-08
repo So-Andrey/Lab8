@@ -82,7 +82,8 @@ public class GUILabels_ru extends ListResourceBundle {
             {"already_reg", "Уже зарегистрированы? Войти"},
             {"become", "Нет аккаунта? Зарегистрироваться"},
             {"log_in", "Войти"},
-            {"login_exists", "Существующий логин"}
+            {"login_exists", "Существующий логин"},
+            {"date_format", "dd.MM.yyyy HH:mm:ss Z"}
     };
 
     public Object[][] getContents() {

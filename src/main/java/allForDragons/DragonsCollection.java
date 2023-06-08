@@ -18,7 +18,7 @@ public class DragonsCollection {
     /** Метод, выводящий информацию о коллекции */
     public static String getInfo() {
         return MyApplication.getAppLanguage().getString("coll_type") + ": " + dragons.getClass().getTypeName().split(".util.")[1] + "\n" +
-                MyApplication.getAppLanguage().getString("coll_date") + ": " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z").format(dateOfInitialization) + "\n" +
+                MyApplication.getAppLanguage().getString("coll_date") + ": " + new SimpleDateFormat(MyApplication.getAppLanguage().getString("date_format")).format(dateOfInitialization) + "\n" +
                 MyApplication.getAppLanguage().getString("coll_amount") + ": " + dragons.size() + "\n";
     }
     /** Метод для добавления драконов из базы данных */

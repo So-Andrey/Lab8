@@ -84,9 +84,9 @@
               <columns>
                 <TableColumn fx:id="id" editable="false" prefWidth="40.1013298034668" resizable="false" text="ID" />
                 <TableColumn fx:id="creator" editable="false" prefWidth="69.39868927001953" resizable="false" text="Creator" />
-                  <TableColumn fx:id="name" prefWidth="75.42436218261719" resizable="false" text="Name" />
-                  <TableColumn fx:id="creationDate" editable="false" prefWidth="177.95669555664062" resizable="false" text="Creation Date" />
-                  <TableColumn fx:id="age" prefWidth="63.638946533203125" resizable="false" text="Age" />
+                  <TableColumn fx:id="name" prefWidth="69.37571716308594" resizable="false" text="Name" />
+                  <TableColumn fx:id="creationDate" editable="false" prefWidth="194.12428283691406" resizable="false" text="Creation Date" />
+                  <TableColumn fx:id="age" prefWidth="54.048004150390625" resizable="false" text="Age" />
                   <TableColumn fx:id="coordinates" prefWidth="121.36105346679688" resizable="false" text="Coordinates">
                      <columns>
                         <TableColumn prefWidth="55.977294921875" resizable="false" text="X" fx:id="x" />

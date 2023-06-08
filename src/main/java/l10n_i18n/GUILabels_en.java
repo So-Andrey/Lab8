@@ -82,8 +82,8 @@ public class GUILabels_en extends ListResourceBundle {
             {"already_reg", "Already registered? Log In"},
             {"become", "Don't have an account? Sign Up"},
             {"log_in", "Log In"},
-            {"login_exists", "Login already exists"}
-
+            {"login_exists", "Login already exists"},
+            {"date_format", "MM-dd-yyyy hh:mm:ss a Z"}
 
     };
 

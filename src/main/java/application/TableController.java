@@ -20,6 +20,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
@@ -31,8 +33,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.util.converter.DoubleStringConverter;
-import javafx.util.converter.FloatStringConverter;
 import javafx.util.converter.LongStringConverter;
 import l10n_i18n.Language;
 
@@ -116,7 +116,7 @@ public class TableController {
     private TableColumn<Dragon, String> creator;
 
     @FXML
-    private TableColumn<Dragon, Double> eyesCount;
+    private TableColumn<Dragon, String> eyesCount;
 
     @FXML
     private TableColumn<Dragon, Long> id;
@@ -134,7 +134,7 @@ public class TableController {
     private TableColumn<Dragon, Long> x;
 
     @FXML
-    private TableColumn<Dragon, Float> y;
+    private TableColumn<Dragon, String> y;
 
     @FXML
     private Label currentUser;
@@ -267,12 +267,21 @@ public class TableController {
                 table.refresh();
             }
         });
-        y.setCellValueFactory(new PropertyValueFactory<>("y"));
-        y.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter()));
+        y.setCellValueFactory(dragonStringCellDataFeatures -> {
+            if (MyApplication.getAppLanguage().equals(Language.en)) {
+                return new SimpleStringProperty(dragonStringCellDataFeatures.getValue().getY() + "");
+            } else {
+                return new SimpleStringProperty((dragonStringCellDataFeatures.getValue().getY() + "").replace('.', ','));
+            }
+        });
+        y.setCellFactory(TextFieldTableCell.forTableColumn());
         y.setOnEditCommit(event -> {
             try {
                 DragonUpdater.updateYFromGUI(event.getRowValue(), event.getNewValue());
                 updateTable();
+            } catch (InputMismatchException inputMismatchException) {
+                showAlert("Error", MyApplication.getAppLanguage().getString("invalid_inp"));
+                table.refresh();
             } catch (NullPointerException nullPointerException) {
                 showAlert("Error", MyApplication.getAppLanguage().getString("edit"));
                 table.refresh();
@@ -326,8 +335,14 @@ public class TableController {
                 table.refresh();
             }
         });
-        eyesCount.setCellValueFactory(new PropertyValueFactory<>("eyesCount"));
-        eyesCount.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        eyesCount.setCellValueFactory(dragonStringCellDataFeatures -> {
+            if (MyApplication.getAppLanguage().equals(Language.en)) {
+                return new SimpleStringProperty(dragonStringCellDataFeatures.getValue().getHead().getEyesCount() + "");
+            } else {
+                return new SimpleStringProperty((dragonStringCellDataFeatures.getValue().getHead().getEyesCount() + "").replace('.', ','));
+            }
+        });
+        eyesCount.setCellFactory(TextFieldTableCell.forTableColumn());
         eyesCount.setOnEditCommit(event -> {
             try {
                 DragonUpdater.updateHeadFromGUI(event.getRowValue(), event.getNewValue());
@@ -339,6 +354,14 @@ public class TableController {
                 showAlert("Error", MyApplication.getAppLanguage().getString("edit"));
                 table.refresh();
             }
+        });
+        eyesCount.setComparator((o1, o2) -> Double.compare(Double.parseDouble(o1.replace(',', '.')), Double.parseDouble(o2.replaceAll(",", "."))));
+        y.setComparator((o1, o2) -> Float.compare(Float.parseFloat(o1.replace(',', '.')), Float.parseFloat(o2.replaceAll(",", "."))));
+        creationDate.setComparator((o1, o2) -> {
+            try {
+                return Long.compare(new SimpleDateFormat(MyApplication.getAppLanguage().getString("date_format")).parse(o1).getTime(), new SimpleDateFormat(MyApplication.getAppLanguage().getString("date_format")).parse(o2).getTime());
+            } catch (ParseException ignored) {}
+            return 0;
         });
 
         currentUser.setText(UserAuthentication.getCurrentUser());
@@ -435,6 +458,7 @@ public class TableController {
             label.setFont(new Font("System", 17));
             mapButton.setFont(new Font("System", 17));
         }
+        table.refresh();
     }
 
     private void updateTable() {

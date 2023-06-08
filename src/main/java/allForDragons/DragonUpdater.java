@@ -440,10 +440,16 @@ public class DragonUpdater {
             throw new NullPointerException();
         }
     }
-    public static void updateYFromGUI(Dragon dragon, Float y) {
+    public static void updateYFromGUI(Dragon dragon, String y) {
+        y = y.replaceAll(",", ".");
         if (dragon.getCreator().equals(UserAuthentication.getCurrentUser())) {
-            DatabaseConnection.executeStatement("update dragons set y = '" + y + "' where id = " + dragon.getId());
-            DragonsCollection.updateFromDB();
+            try {
+                Float.parseFloat(y);
+                DatabaseConnection.executeStatement("update dragons set y = '" + Float.parseFloat(y) + "' where id = " + dragon.getId());
+                DragonsCollection.updateFromDB();
+            } catch (NumberFormatException numberFormatException) {
+                throw new InputMismatchException();
+            }
         } else {
             throw new NullPointerException();
         }
@@ -487,10 +493,16 @@ public class DragonUpdater {
             throw new NullPointerException();
         }
     }
-    public static void updateHeadFromGUI(Dragon dragon, Double eyesCount) {
+    public static void updateHeadFromGUI(Dragon dragon, String  eyesCount) {
+        eyesCount = eyesCount.replaceAll(",", ".");
         if (dragon.getCreator().equals(UserAuthentication.getCurrentUser())) {
-            DatabaseConnection.executeStatement("update dragons set eyescount = '" + eyesCount + "' where id = " + dragon.getId());
-            DragonsCollection.updateFromDB();
+            try {
+                Double.parseDouble(eyesCount);
+                DatabaseConnection.executeStatement("update dragons set eyescount = '" + Double.parseDouble(eyesCount) + "' where id = " + dragon.getId());
+                DragonsCollection.updateFromDB();
+            } catch (NumberFormatException numberFormatException) {
+                throw new InputMismatchException();
+            }
         } else {
             throw new NullPointerException();
         }
